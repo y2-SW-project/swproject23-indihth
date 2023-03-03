@@ -26,8 +26,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('post_comments', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['goal_id']);
+            $table->dropForeign('post_comments_task_id_foreign');
+            // $table->dropForeign(['goal_id']);
         });
 
         Schema::dropIfExists('post_comments');
