@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('description', 250);
             $table->enum('type', ['Reading', 'Listening', 'Studying', 'Speaking']);
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('goal_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
+            $table->foreignId('user_id')->constrained()->onDelete('restrict');
+            $table->foreignId('goal_id')->constrained()->onDelete('restrict');
+            $table->timestamps(); 
         });
     }
 

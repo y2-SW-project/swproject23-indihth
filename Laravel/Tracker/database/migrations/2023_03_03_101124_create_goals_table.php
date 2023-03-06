@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->enum('language', ['German', 'Spanish', 'French', 'Italian']);
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('restrict'); // onDelete('restrict') as troubleshooting
             $table->timestamps();
         });
     }

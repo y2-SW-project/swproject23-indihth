@@ -17,7 +17,11 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->numerify('Task ###'),
+            'description' => $this->faker->sentences(3, true),
+            'type' => $this->faker->randomElement(['Reading', 'Listening', 'Studying', 'Speaking']),
+            'user_id' => $this->faker->numberBetween(1, 5),
+            'goal_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }
