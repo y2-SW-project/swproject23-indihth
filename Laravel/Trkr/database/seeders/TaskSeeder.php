@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Task;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class Partnership extends Seeder
+class TaskSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,9 @@ class Partnership extends Seeder
      */
     public function run()
     {
-        //
+        Task::factory()
+        ->times(3)
+        ->hastaskPosts(3)
+        ->create();
     }
 }

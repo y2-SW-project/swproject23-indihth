@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\TaskPost;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class Goal extends Seeder
+class TaskPostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,9 @@ class Goal extends Seeder
      */
     public function run()
     {
-        //
+        TaskPost::factory()
+        ->times(2)
+        ->hasComment()
+        ->create();
     }
 }

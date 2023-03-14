@@ -17,7 +17,10 @@ class GoalFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->numerify('Goal ###'),
+            'description' => $this->faker->sentences(3, true),
+            'language' => $this->faker->randomElement(['German', 'Spanish', 'French', 'Italian']),
+            'user_id' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

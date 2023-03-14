@@ -17,7 +17,10 @@ class TaskPostFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->numerify('Task Post ###'),
+            'content' => $this->faker->text(200),
+            'user_id' => $this->faker->numberBetween(1, 5),
+            'task_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }

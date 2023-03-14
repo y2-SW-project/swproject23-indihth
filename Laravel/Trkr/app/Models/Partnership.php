@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Partnership extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function user() {
+        return $this->belongsTo(TaskPost::class);
+    }
 }
