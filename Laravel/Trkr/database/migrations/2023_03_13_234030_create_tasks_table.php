@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('title');
+            $table->string('description', 250);
+            $table->enum('type', ['Reading', 'Listening', 'Studying', 'Speaking']);
+            $table->foreignId('user_id')->constrained()->onDelete('restrict');
+            $table->foreignId('goal_id')->constrained()->onDelete('restrict');
+            $table->timestamps(); 
         });
     }
 

@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('post_comments', function (Blueprint $table) {
             $table->id();
+            $table->string('content', 250);
+            $table->foreignId('task_post_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +29,11 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('post_comments', function (Blueprint $table) {
+            $table->dropForeign('post_comments_task_id_foreign');
+            // $table->dropForeign(['goal_id']);
+        });
+        
         Schema::dropIfExists('comments');
     }
 };
