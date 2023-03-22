@@ -18,7 +18,7 @@ class GoalController extends Controller
     {
         // Fetch goals in order of when they were created and limited to 5 per page
         $goals = Goal::where('user_id', Auth::id())
-        // ->latest('updated_at')
+        ->latest('updated_at')
         ->with('tasks')
         ->with('user')
         ->paginate(5);
