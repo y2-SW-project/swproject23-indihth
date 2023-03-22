@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da1fc47a37488b86e0979120f7e16296",
+    "content-hash": "1f2f2883452c13ce1a0ee0caf34e69ab",
     "packages": [
         {
             "name": "brick/math",
@@ -2331,6 +2331,94 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "okipa/laravel-form-components",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Okipa/laravel-form-components.git",
+                "reference": "7ddabaa5f7bb930850e4596f43c8fe67a3adab97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Okipa/laravel-form-components/zipball/7ddabaa5f7bb930850e4596f43c8fe67a3adab97",
+                "reference": "7ddabaa5f7bb930850e4596f43c8fe67a3adab97",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0|^10.0",
+                "php": "8.1.*|8.2.*"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.4",
+                "laravel/pint": "^1.1",
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0",
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpmd/phpmd": "^2.11",
+                "phpstan/phpstan-mockery": "^1.0",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Okipa\\LaravelFormComponents\\LaravelFormComponentsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Okipa\\LaravelFormComponents\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arthur LORENT",
+                    "email": "arthur.lorent@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Ready-to-use and customizable form components.",
+            "homepage": "https://github.com/okipa/laravel-form-components",
+            "keywords": [
+                "components",
+                "form",
+                "generate",
+                "generation",
+                "generator",
+                "html",
+                "laravel",
+                "laravel-form-components",
+                "livewire",
+                "okipa",
+                "package",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/Okipa/laravel-form-components/issues",
+                "source": "https://github.com/Okipa/laravel-form-components/tree/1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/arthurlorent",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Okipa",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/arthurlorent",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2023-01-21T21:43:38+00:00"
         },
         {
             "name": "phpoption/phpoption",

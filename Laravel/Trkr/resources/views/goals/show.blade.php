@@ -15,7 +15,7 @@
                   <p class="card-text">{{ $goal->user->name }}</p>
                 </div>
               </div>
-{{-- 
+
         </div>
     </div>
 </div>

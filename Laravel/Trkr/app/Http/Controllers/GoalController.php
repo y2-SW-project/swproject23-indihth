@@ -17,7 +17,11 @@ class GoalController extends Controller
     public function index()
     {
         // Fetch goals in order of when they were created and limited to 5 per page
-        $goals = Goal::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
+        $goals = Goal::where('user_id', Auth::id())
+        // ->latest('updated_at')
+        ->with('tasks')
+        ->with('user')
+        ->paginate(5);
 
         // Returns the goals index view and passes the goals variable with the logged in users' goals
         return view('goals.index')->with('goals', $goals);
@@ -30,7 +34,11 @@ class GoalController extends Controller
      */
     public function create()
     {
-        return view ('goals.create');
+         // Fetch goals in order of when they were created and limited to 5 per page
+         $goals = Goal::where('user_id', Auth::id())->get();
+         $languages = ['German', 'Spanish', 'French', 'Italian'];
+
+        return view ('goals.create')->with('goals', $goals)->with('languages', $languages);
     }
 
     /**
@@ -63,7 +71,9 @@ class GoalController extends Controller
      */
     public function show(Goal $goal)
     {
-        //
+        $user = Auth::user();
+
+        return view('goals.show')->with('goal', $goal);
     }
 
     /**

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->TINYTEXT('description');
             $table->enum('language', ['German', 'Spanish', 'French', 'Italian']);
             $table->foreignId('user_id')->constrained()->onDelete('restrict'); // onDelete('restrict') as troubleshooting
             $table->timestamps();

@@ -13,6 +13,9 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ $goal->language }}</h5>
                   <p class="card-text">{{ Str::limit($goal->description, 200) }}</p>
+                  @foreach ($goal->tasks as $task)
+                  <p class="card-text">{{ $task->title }}</p>
+                  @endforeach
                   <p class="card-text">{{ $goal->user->name }}</p>
                   {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
                 </div>
