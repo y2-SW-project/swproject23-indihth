@@ -84,7 +84,10 @@ class GoalController extends Controller
      */
     public function edit(Goal $goal)
     {
-        //
+        $user = Auth::user();
+        $languages = ['German', 'Spanish', 'French', 'Italian'];
+
+        return view('goals.edit')->with('languages', $languages);
     }
 
     /**
