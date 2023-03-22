@@ -85,9 +85,11 @@ class GoalController extends Controller
     public function edit(Goal $goal)
     {
         $user = Auth::user();
+
+        // TODO Create a languages table, easier to manage and update
         $languages = ['German', 'Spanish', 'French', 'Italian'];
 
-        return view('goals.edit')->with('languages', $languages);
+        return view('goals.edit')->with('goal', $goal)->with('languages', $languages);
     }
 
     /**
@@ -99,7 +101,20 @@ class GoalController extends Controller
      */
     public function update(Request $request, Goal $goal)
     {
-        //
+        $user = Auth::user();
+
+        $request->validate([
+            'title' => 'required|max:50',
+            'description' => 'required'
+        ]);
+
+        $goal->update([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+
+        return to_route('goals.show', $goal);
     }
 
     /**
@@ -110,6 +125,10 @@ class GoalController extends Controller
      */
     public function destroy(Goal $goal)
     {
-        //
+        $user = Auth::user();
+
+        $goal->delete();
+
+        return to_route('goals.index');
     }
 }

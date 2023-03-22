@@ -32,7 +32,7 @@
                         <div class="col-md-6">
                             <x:form::input name="title" label="Title" />
                             {{-- <x:form::input type="email" name="email" /> --}}
-                            <x:form::textarea name="description" label="Description" />
+                            <x:form::textarea rows="5" name="description" label="Description" />
                         </div>
                         <div class="col-md-6">
                             {{-- 'multiple' displays options as non-dropdown list --}}
@@ -43,7 +43,7 @@
                             <x:form::toggle-switch name="active" />
                         </div>
                         <div class="col-12 mt-2">
-                            <x:form::button.link class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link>
+                            <x:form::button.link href="{{ route('goals.index') }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
                             <x:form::button.submit />
                         </div>
                         </x:form:form>
