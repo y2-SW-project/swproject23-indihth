@@ -18,7 +18,8 @@ class CommentFactory extends Factory
     {
         return [
             'content' => $this->faker->numerify('Post comment ###'),
-            'user_id' => $this->faker->numberBetween(1, 5),
+            'user_id' => '1',
+            // 'user_id' => $this->faker->numberBetween(1, 5),
             'task_post_id' => $this->faker->numberBetween(1, 3),
         ];
     }

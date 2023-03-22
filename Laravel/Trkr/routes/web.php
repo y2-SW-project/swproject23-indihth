@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +23,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Allows only logged in authorised users to access the tvshows page
-Route::resource('/user', tvshowController::class)->middleware(['auth']);
+Route::resource('/goals', GoalController::class)->middleware(['auth']);

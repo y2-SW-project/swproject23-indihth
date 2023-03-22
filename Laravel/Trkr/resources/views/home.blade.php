@@ -17,6 +17,13 @@
                     {{ __('You are logged in!') }}
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">{{ __('sample') }}</div>
+
+                <div class="card-body">
+                    {{ __('You are logged in!') }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

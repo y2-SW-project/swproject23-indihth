@@ -29,10 +29,14 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('post_comments', function (Blueprint $table) {
-            $table->dropForeign('post_comments_task_id_foreign');
-            // $table->dropForeign(['goal_id']);
+        Schema::table('comments', function (Blueprint $table) {
+            // $table->dropForeign('comments_task_post_id_foreign');
+            // $table->dropForeign('comments_user_id_foreign');
+            // $table->dropForeign(['user_id']);
+            // $table->dropForeign(['task_post_id']);
         });
+
+        
         
         Schema::dropIfExists('comments');
     }

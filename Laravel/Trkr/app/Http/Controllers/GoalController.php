@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Goal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class GoalController extends Controller
 {
@@ -14,7 +16,11 @@ class GoalController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch goals in order of when they were created and limited to 5 per page
+        $goals = Goal::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
+
+        // Returns the goals index view and passes the goals variable with the logged in users' goals
+        return view('goals.index')->with('goals', $goals);
     }
 
     /**
@@ -24,7 +30,7 @@ class GoalController extends Controller
      */
     public function create()
     {
-        //
+        return view ('goals.create');
     }
 
     /**
@@ -35,7 +41,18 @@ class GoalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:50',
+            'description' => 'required'
+        ]);
+
+        Goal::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+
+        return to_route('goals.index');
     }
 
     /**
