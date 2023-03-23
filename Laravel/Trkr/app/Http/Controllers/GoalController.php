@@ -89,7 +89,8 @@ class GoalController extends Controller
         // TODO Create a languages table, easier to manage and update
         $languages = ['German', 'Spanish', 'French', 'Italian'];
 
-        return view('goals.edit')->with('goal', $goal)->with('languages', $languages);
+        // return view('goals.edit')->with('goal', $goal)->with('languages', $languages);
+        return view('goals.edit')->with('goal', $goal);
     }
 
     /**
@@ -132,3 +133,4 @@ class GoalController extends Controller
         return to_route('goals.index');
     }
 }
+ 
