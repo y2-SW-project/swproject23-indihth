@@ -1,7 +1,3 @@
-@php
-    $languages = ['German', 'Spanish', 'French', 'Italian'];
-@endphp
-
 @extends('layouts.app')
 
 @section('content')
@@ -21,7 +17,7 @@
                         <div class="col-md-6">
                             {{-- 'multiple' displays options as non-dropdown list --}}
                             <label for="languages" class="form-label">Language</label>
-                            <select class="form-select" id="languages" name="languages" label="Select Language" >
+                            <select class="form-select" id="languages" name="language" label="Select Language" >
                                 @foreach ($languages as $language)
                                     <option  value="{{ $language }}" @selected(old('language', $goal->language) == $language)>
                                         {{ $language }}

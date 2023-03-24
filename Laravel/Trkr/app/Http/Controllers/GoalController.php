@@ -89,8 +89,7 @@ class GoalController extends Controller
         // TODO Create a languages table, easier to manage and update
         $languages = ['German', 'Spanish', 'French', 'Italian'];
 
-        // return view('goals.edit')->with('goal', $goal)->with('languages', $languages);
-        return view('goals.edit')->with('goal', $goal);
+        return view('goals.edit')->with('goal', $goal)->with('languages', $languages);
     }
 
     /**
@@ -104,15 +103,18 @@ class GoalController extends Controller
     {
         $user = Auth::user();
 
+        // TODO: Add validation on 'language' to confirm it's a valid option
         $request->validate([
             'title' => 'required|max:50',
-            'description' => 'required'
+            'description' => 'required',
+            'language' => 'required'
         ]);
 
         $goal->update([
             'user_id' => Auth::id(),
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'language' => $request->language
         ]);
 
         return to_route('goals.show', $goal);

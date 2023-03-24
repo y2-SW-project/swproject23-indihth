@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <a href="{{ route('goals.create') }}" class="btn btn-primary">+ Add New Goal</a>
             @foreach ($goals as $goal)
-            <div class="card m-3">
+            <div class="card my-3">
                 <div class="card-header">
                        <a href="{{ route('goals.show', $goal->id) }}"> {{ $goal->title }} </a>
                 </div>
