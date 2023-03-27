@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Goal;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -74,9 +75,11 @@ class GoalController extends Controller
      */
     public function show(Goal $goal)
     {
+        $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
+        $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
         $user = Auth::user();
 
-        return view('goals.show')->with('goal', $goal);
+        return view('goals.show', with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done]));
     }
 
     /**

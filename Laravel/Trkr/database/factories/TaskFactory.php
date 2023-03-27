@@ -21,6 +21,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->sentences(3, true),
             'type' => $this->faker->randomElement(['Reading', 'Listening', 'Studying', 'Speaking']),
             'user_id' => '1',
+            'status' => $this->faker->numberBetween(0, 1),
             // 'user_id' => $this->faker->numberBetween(1, 5),
             'goal_id' => $this->faker->numberBetween(1, 3),
         ];
