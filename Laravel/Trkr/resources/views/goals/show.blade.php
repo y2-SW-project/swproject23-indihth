@@ -19,7 +19,7 @@
                 {{-- Display Goal Information --}}
                 <div class="card my-3">
                     <div class="card-header">
-                        {{ $goal->title }}
+                        {{ $goal->title }} Id:{{ $goal->id}} 
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $goal->language }}</h5>
@@ -34,6 +34,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h3 class="h3">Tasks:</h3>
+                {{-- {{ route('name.route', ['id' => $val->id]) }} --}}
+                <a href="{{ route('tasks.create',  ['id' => $goal->id]) }}" class="btn btn-primary">+ Add New Task</a>
                 <div class="row ">
                     {{-- TODO: max 3 tasks per row --}}
                     @foreach ($goal->tasks as $task)
@@ -43,20 +45,28 @@
                                     {{-- <div class="card-header">
                                     {{ $task->title }}
                                 </div> --}}
-                                    <h5 class="card-title"> {{ $task->title }}</h5>
+                                    <h5 class="card-title"> {{ $task->title }} Goal ID: {{ $task->goal_id }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ $task->type }}</h6>
                                     <p class="card-text">
                                         {{ Str::limit($task->description, 100) }}
                                     </p>
 
-                                    {{-- <div class="card-body">
-                                    <h5 class="card-title">{{ $task->type }}</h5>
-                                    <p class="card-text">{{ Str::limit($task->description, 200) }}</p>
-                                </div> --}}
+                                    <div class="d-flex">
+                                    {{-- Task Edit Button --}}
+                                    <a href="{{ route('tasks.edit', $task) }}" class="btn btn-primary me-2">Edit Task</a>
+
+                                    {{-- Task Delete Button --}}
+                                    <x:form::form action="{{ route('tasks.destroy', $task) }}" method="delete">
+                                        <x:form::button.submit class="btn-danger">Delete Task</x:form::button.submit>
+                                    </x:form::form>
+                                </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
+                    <form action="post">
+                        <input type="hidden" name="goal_id" value="{{ $goal->id }}" />
+                    </form>
                 </div>
             </div>
         </div>

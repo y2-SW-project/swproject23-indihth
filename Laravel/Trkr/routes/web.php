@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Allows only logged in authorised users to access the tvshows page
 Route::resource('/goals', GoalController::class)->middleware(['auth']);
+Route::resource('/tasks', TaskController::class)->middleware(['auth'])->except('create, edit');
+
+Route::get('/tasks/{id}/create', [App\Http\Controllers\TaskController::class, 'create'])->name('tasks.create');
+Route::get('/tasks/{id}/edit', [App\Http\Controllers\TaskController::class, 'edit'])->name('tasks.edit');
+

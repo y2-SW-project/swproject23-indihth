@@ -51,13 +51,16 @@ class GoalController extends Controller
     {
         $request->validate([
             'title' => 'required|max:50',
-            'description' => 'required'
+            'description' => 'required',
+            // Issue with validating select option, 
+            'language' => 'required'
         ]);
 
         Goal::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'language' => $request->language
         ]);
 
         return to_route('goals.index');

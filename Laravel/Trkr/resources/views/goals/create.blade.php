@@ -36,15 +36,18 @@
                         </div>
                         <div class="col-md-6">
                             {{-- 'multiple' displays options as non-dropdown list --}}
-                            <x:form::select name="languages" :options="$languages" label="Select Language" multiple />
-                            <x:form::checkbox name="technologies"
-                                :group="[1 => 'Laravel', 2 => 'Bootstrap', 3 => 'Tailwind', 4 => 'Livewire']" inline />
-                            <x:form::radio name="gender" :group="[1 => 'Male', 2 => 'Female', 3 => 'Other']" inline />
-                            <x:form::toggle-switch name="active" />
+                            <label for="activity" class="form-label">Language</label>
+                            <select type="select" field="languages" class="form-select" id="languages" name="language" label="Select Language" multiple>
+                                @foreach ($languages as $language)
+                                    <option  value="{{ $language }}">
+                                        {{ $language }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-12 mt-2">
                             <x:form::button.link href="{{ route('goals.index') }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
-                            <x:form::button.submit />
+                            <x:form::button.submit>Save </x:form::button.submit>
                         </div>
                         </x:form:form>
                 </div>
