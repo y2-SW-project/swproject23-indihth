@@ -56,11 +56,12 @@ class TaskController extends Controller
         Task::create([
             'user_id' => Auth::id(),
             'goal_id' => $request->goal_id,
+            'status' => false,
             'title' => $request->title,
             'description' => $request->description
         ]);
 
-        return to_route('goals.index');
+        return to_route('goals.show', $request->goal_id);
     }
 
     /**
@@ -97,6 +98,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
+        // dd($request->boolean('status'));
         $user = Auth::user();
 
         $request->validate([
@@ -104,14 +106,15 @@ class TaskController extends Controller
             'description' => 'required'
         ]);
 
-        Task::create([
+        $task->update([
             'user_id' => Auth::id(), 
             'goal_id' => $task->goal_id,    // Goal ID is the same as before edit
+            'status' => $request->boolean('status'), 
             'title' => $request->title,
             'description' => $request->description
         ]);
 
-        return to_route('goals.index');
+        return to_route('goals.show', $task->goal);
     }
 
     /**
@@ -126,6 +129,6 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return to_route('goals.index');
+        return to_route('goals.show', $task->goal_id);
     }
 }

@@ -17,24 +17,30 @@
                         <div class="col-md-6">
                             {{-- 'multiple' displays options as non-dropdown list --}}
                             <label for="languages" class="form-label">Language</label>
-                            <select class="form-select" id="languages" name="language" label="Select Language" >
+                            <select class="form-select" id="languages" name="language" label="Select Language">
                                 @foreach ($type as $activity)
-                                    <option  value="{{ $activity }}" @selected(old('activity', $task->activity) == $activity)>
+                                    <option value="{{ $activity }}" @selected(old('activity', $task->activity) == $activity)>
                                         {{ $activity }}
                                     </option>
                                 @endforeach
                             </select>
 
-                            <br/>
-                            {{-- <x:form::select name="language" :options="$languages" label="Select Language" /> --}}
-                            <x:form::checkbox name="technologies"
-                                :group="[1 => 'Laravel', 2 => 'Bootstrap', 3 => 'Tailwind', 4 => 'Livewire']" inline />
-                            <x:form::radio name="gender" :group="[1 => 'Male', 2 => 'Female', 3 => 'Other']" inline />
-                            <x:form::toggle-switch name="active" />
+                            <br />
+                            <div class="form-check">
+                                {{-- <input name="status" class="form-check-input" type="checkbox" value="1" @checked($task->status || old('status', 0) === 1) id="flexCheckDefault"> --}}
+                                    <input name="status" class="form-check-input" type="checkbox" value="1" @checked(old('status', $task->status ))>
+                                    {{-- <input name="status" class="form-check-input" type="checkbox" value="1" @checked($task->status || old('status', 0) === 1) id="flexCheckDefault"> --}}
+
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Task Done
+                                </label>
+                            </div>
+                            {{-- <x:form::radio name="gender" :group="[1 => 'Male', 2 => 'Female', 3 => 'Other']" inline /> --}}
+
                         </div>
-                        {{-- <input type="hidden" name="goal_id" value="{{ $goal_id }}"/> --}}
+
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('tasks.index') }}" class="btn-secondary me-3">
+                            <x:form::button.link href="{{ route('goals.show', $task->goal) }}" class="btn-secondary me-3">
                                 {{ __('Cancel') }}</x:form::button.link>
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>
