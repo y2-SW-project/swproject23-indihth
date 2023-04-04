@@ -13,7 +13,7 @@
                     <x:form::form action="{{ route('user.goals.destroy', $goal) }}" method="delete">
                         {{-- @method() and @csrf() not needed as form::form component automatically includes these --}}
 
-                        <x:form::button.submit class="btn-danger">Delete Goal</x:form::button.submit>
+                        <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete Goal</x:form::button.submit>
                     </x:form::form>
                 </div>
                 {{-- Display Goal Information --}}
@@ -60,7 +60,7 @@
 
                                     {{-- Task Delete Button --}}
                                     <x:form::form action="{{ route('user.tasks.destroy', $task) }}" method="delete">
-                                        <x:form::button.submit class="btn-danger">Delete Task</x:form::button.submit>
+                                        <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete Task</x:form::button.submit>
                                     </x:form::form>
                                 </div>
                                 </div>
@@ -90,7 +90,7 @@
 
                                     {{-- Task Delete Button --}}
                                     <x:form::form action="{{ route('user.tasks.destroy', $task) }}" method="delete">
-                                        <x:form::button.submit class="btn-danger">Delete Task</x:form::button.submit>
+                                        <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete Task</x:form::button.submit>
                                     </x:form::form>
                                 </div>
                                 </div>

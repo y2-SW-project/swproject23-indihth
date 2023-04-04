@@ -141,6 +141,6 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return to_route('admin.goals.show', $task->goal_id);
+        return to_route('admin.goals.show', $task->goal_id)->with('success','Task Deleted');
     }
 }

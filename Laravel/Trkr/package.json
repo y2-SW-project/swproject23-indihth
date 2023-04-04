@@ -13,5 +13,11 @@
         "postcss": "^8.1.14",
         "sass": "^1.56.1",
         "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@sweetalert2/theme-bootstrap-4": "^5.0.15",
+        "@sweetalert2/themes": "^5.0.15",
+        "sweetalert": "^2.1.2",
+        "sweetalert2": "^11.4.8"
     }
 }
