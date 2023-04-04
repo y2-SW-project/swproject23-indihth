@@ -8,7 +8,7 @@
                 <div class="card py-3 px-4">
 
                     {{-- You won't need to define a @method() directive, declare your PUT, PATCH or DELETE action directly in the action attribute --}}
-                    <x:form::form :bind="$goal" class="row" method="put" :action="route('goals.update', $goal)">
+                    <x:form::form :bind="$goal" class="row" method="put" :action="route('admin.goals.update', $goal)">
                         <div class="col-md-6">
                             <x:form::input name="title" label="Title" :value="@old('title', $goal->title)" />
                             {{-- <x:form::input type="email" name="email" /> --}}
@@ -33,7 +33,7 @@
                             <x:form::toggle-switch name="active" />
                         </div>
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('goals.index') }}" class="btn-secondary me-3">
+                            <x:form::button.link href="{{ route('admin.goals.index') }}" class="btn-secondary me-3">
                                 {{ __('Cancel') }}</x:form::button.link>
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>

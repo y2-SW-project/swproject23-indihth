@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Goal;
@@ -28,7 +28,7 @@ class TaskController extends Controller
     public function create($id)
     {
         $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user->authorizeRoles('user');
         // dd($id);
         // $goal = Goal::where('user_id', Auth::id())->get();
         $task = Task::where('user_id', Auth::id())->get();
@@ -39,7 +39,7 @@ class TaskController extends Controller
         // $task = Task::find($goal);
         // dd($task->goal);
 
-        return view('admin.tasks.create')->with('task', $task)->with('type', $type)->with('goal_id', $goal_id);
+        return view('user.tasks.create')->with('task', $task)->with('type', $type)->with('goal_id', $goal_id);
     }
 
     /**
@@ -51,7 +51,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user->authorizeRoles('user');
 
         $request->validate([
             'title' => 'required|max:50',
@@ -67,7 +67,7 @@ class TaskController extends Controller
             'description' => $request->description
         ]);
 
-        return to_route('admin.goals.show', $request->goal_id);
+        return to_route('user.goals.show', $request->goal_id);
     }
 
     /**
@@ -89,12 +89,12 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user->authorizeRoles('user');
 
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
         // $goal_id = $id;
 
-        return view('admin.tasks.edit')->with('task', $task)->with('type', $type);
+        return view('user.tasks.edit')->with('task', $task)->with('type', $type);
         // return view('tasks.edit')->with('task', $task)->with('type', $type)->with('goal_id', $goal_id);
     }
 
@@ -108,7 +108,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user->authorizeRoles('user');
 
         // dd($request->boolean('status'));
         $user = Auth::user();
@@ -125,7 +125,7 @@ class TaskController extends Controller
             'description' => $request->description
         ]);
 
-        return to_route('admin.goals.show', $task->goal);
+        return to_route('user.goals.show', $task->goal);
     }
 
     /**
@@ -137,10 +137,10 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user->authorizeRoles('user');
 
         $task->delete();
 
-        return to_route('admin.goals.show', $task->goal_id);
+        return to_route('user.goals.show', $task->goal_id);
     }
 }

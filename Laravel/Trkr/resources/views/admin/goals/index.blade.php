@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <a href="{{ route('goals.create') }}" class="btn btn-primary">+ Add New Goal</a>
+            <a href="{{ route('admin.goals.create') }}" class="btn btn-primary">+ Add New Goal</a>
             @foreach ($goals as $goal)
             <div class="card my-3">
                 <div class="card-header">
-                       <a href="{{ route('goals.show', $goal->id) }}"> {{ $goal->title }} </a>
+                       <a href="{{ route('admin.goals.show', $goal->id) }}"> {{ $goal->title }} </a>
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">{{ $goal->language }}</h5>

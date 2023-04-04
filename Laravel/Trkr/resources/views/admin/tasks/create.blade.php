@@ -11,7 +11,7 @@
                         {{-- Goal id: {{ $task}} --}}
                     </div>
                     {{-- possible to use :bind="goals" to auto popular labels, error --}}
-                    <x:form::form class="row" method="post" :action="route('tasks.store')">
+                    <x:form::form class="row" method="post" :action="route('admin.tasks.store')">
                         <div class="col-md-6">
                             <x:form::input name="title" label="Title" />
                             {{-- <x:form::input type="email" name="email" /> --}}

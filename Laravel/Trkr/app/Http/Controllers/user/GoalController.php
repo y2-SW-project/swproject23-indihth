@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
+namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Goal;
 use App\Models\Task;
@@ -19,16 +18,17 @@ class GoalController extends Controller
     public function index()
     {
         $user = Auth::user();   // Checking if the user is logged in
-        $user->authorizeRoles('admin'); // Checking if the user is an admin
+        $user->authorizeRoles('user'); // Checking if the user is an admin
 
-        // Fetch goals from all users in order of when they were created and limited to 5 per page
-        $goals = Goal::latest('updated_at')
-            ->with('tasks')
-            ->with('user')
-            ->paginate(5);
+        // Fetch goals in order of when they were created and limited to 5 per page
+        $goals = Goal::where('user_id', Auth::id())
+        ->latest('updated_at')
+        ->with('tasks')
+        ->with('user')
+        ->paginate(5);
 
         // Returns the goals index view and passes the goals variable with the logged in users' goals
-        return view('admin.goals.index')->with('goals', $goals);
+        return view('user.goals.index')->with('goals', $goals);
     }
 
     /**
@@ -38,14 +38,14 @@ class GoalController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user = Auth::user();  
+        $user->authorizeRoles('user');
 
-        // Fetch goals in order of when they were created and limited to 5 per page
-        $goals = Goal::where('user_id', Auth::id())->get();
-        $languages = ['German', 'Spanish', 'French', 'Italian'];
+         // Fetch goals in order of when they were created and limited to 5 per page
+         $goals = Goal::where('user_id', Auth::id())->get();
+         $languages = ['German', 'Spanish', 'French', 'Italian'];
 
-        return view('admin.goals.create')->with('goals', $goals)->with('languages', $languages);
+        return view ('user.goals.create')->with('goals', $goals)->with('languages', $languages);
     }
 
     /**
@@ -56,8 +56,8 @@ class GoalController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user = Auth::user();  
+        $user->authorizeRoles('user');
 
         $request->validate([
             'title' => 'required|max:50',
@@ -73,7 +73,7 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        return to_route('admin.goals.index');
+        return to_route('user.goals.index');
     }
 
     /**
@@ -84,14 +84,14 @@ class GoalController extends Controller
      */
     public function show(Goal $goal)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user = Auth::user();  
+        $user->authorizeRoles('user');
 
         $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
         $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
         $user = Auth::user();
 
-        return view('admin.goals.show', with(["goal" => $goal, "toDo" => $toDo, "done" => $done]));
+        return view('user.goals.show', with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done]));
     }
 
     /**
@@ -102,13 +102,13 @@ class GoalController extends Controller
      */
     public function edit(Goal $goal)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user = Auth::user();  
+        $user->authorizeRoles('user');
 
         // TODO Create a languages table, easier to manage and update
         $languages = ['German', 'Spanish', 'French', 'Italian'];
 
-        return view('admin.goals.edit')->with('goal', $goal)->with('languages', $languages);
+        return view('user.goals.edit')->with('goal', $goal)->with('languages', $languages);
     }
 
     /**
@@ -120,8 +120,8 @@ class GoalController extends Controller
      */
     public function update(Request $request, Goal $goal)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user = Auth::user();  
+        $user->authorizeRoles('user');
 
         // TODO: Add validation on 'language' to confirm it's a valid option
         $request->validate([
@@ -136,7 +136,7 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        return to_route('admin.goals.show', $goal);
+        return to_route('user.goals.show', $goal);
     }
 
     /**
@@ -147,11 +147,12 @@ class GoalController extends Controller
      */
     public function destroy(Goal $goal)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $user = Auth::user();  
+        $user->authorizeRoles('user');
 
         $goal->delete();
 
-        return to_route('admin.goals.index');
+        return to_route('user.goals.index');
     }
 }
+ 

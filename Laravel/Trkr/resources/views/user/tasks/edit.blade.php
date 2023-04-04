@@ -8,7 +8,7 @@
                 <div class="card py-3 px-4">
 
                     {{-- You won't need to define a @method() directive, declare your PUT, PATCH or DELETE action directly in the action attribute --}}
-                    <x:form::form :bind="$task" class="row" method="put" :action="route('tasks.update', $task)">
+                    <x:form::form :bind="$task" class="row" method="put" :action="route('user.tasks.update', $task)">
                         <div class="col-md-6">
                             <x:form::input name="title" label="Title" :value="@old('title', $task->title)" />
                             {{-- <x:form::input type="email" name="email" /> --}}
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('goals.show', $task->goal) }}" class="btn-secondary me-3">
+                            <x:form::button.link href="{{ route('user.goals.show', $task->goal) }}" class="btn-secondary me-3">
                                 {{ __('Cancel') }}</x:form::button.link>
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>

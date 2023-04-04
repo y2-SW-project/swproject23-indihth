@@ -28,7 +28,7 @@
                 </form> --}}
 
                     {{-- possible to use :bind="goals" to auto popular labels, error --}}
-                    <x:form::form class="row" method="post" :action="route('goals.store')">
+                    <x:form::form class="row" method="post" :action="route('admin.goals.store')">
                         <div class="col-md-6">
                             <x:form::input name="title" label="Title" />
                             {{-- <x:form::input type="email" name="email" /> --}}
@@ -46,7 +46,7 @@
                             </select>
                         </div>
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('goals.index') }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
+                            <x:form::button.link href="{{ route('admin.goals.index') }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>
                         </x:form:form>

@@ -4,7 +4,7 @@
             :active="request() - > routeIs('goals.index')">{{ __('Goals') }}</a>
     </li> --}}
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('goals.index') }}">{{ __('Goals') }}</a>
+        <a class="nav-link" href="{{ route('home.index') }}">{{ __('Home') }}</a>
     </li>
     
 </ul>
