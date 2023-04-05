@@ -36,6 +36,7 @@ class User extends Authenticatable
     }
 
 
+
     // Function to check if a user is authorised to do a certain task
     // Returns error otherwise
     public function authorizeRoles($roles)

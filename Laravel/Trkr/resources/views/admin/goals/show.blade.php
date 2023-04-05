@@ -39,12 +39,11 @@
                 <h3 class="h3">Tasks:</h3>
                 {{-- {{ route('name.route', ['id' => $val->id]) }} --}}
                 <a href="{{ route('admin.tasks.create',  ['id' => $goal->id]) }}" class="btn btn-primary">+ Add New Task</a>
-                <div class="row ">
+                <div class="row">
                     {{-- TODO: max 3 tasks per row --}}
                     <div class="col">
                         <h3 class="h3">To-do</h3>
                     @foreach ($toDo as $task)
-                    {{-- @foreach ($goal->tasks as $task) --}}
                         <div class="col">
                             <div class="card mb-3">
                                 <div class="card-body">

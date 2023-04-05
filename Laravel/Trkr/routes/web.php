@@ -1,10 +1,14 @@
 <?php
+
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\admin\GoalController as AdminGoalController;
-use App\Http\Controllers\admin\TaskController as AdminTaskController;
-
 use App\Http\Controllers\user\GoalController as UserGoalController;
+
+use App\Http\Controllers\admin\TaskController as AdminTaskController;
 use App\Http\Controllers\user\TaskController as UserTaskController;
+
+use App\Http\Controllers\admin\UserController as AdminUserController;
+use App\Http\Controllers\user\UserController as UserUserController;
 
 // use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TaskController;
@@ -25,7 +29,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    Alert::success('Success Title', 'Success Message');
     return view('welcome');
 });
 
@@ -49,3 +52,11 @@ Route::resource('/user/tasks', UserTaskController::class)->middleware(['auth'])-
 // Routes created seperately in order to pass the goal id through to the task create and edit views
 Route::get('/user/tasks/{id}/create', [UserTaskController::class, 'create'])->name('user.tasks.create');
 Route::get('/user/tasks/{id}/edit', [UserTaskController::class, 'edit'])->name('user.tasks.edit');
+
+// User routes, index and show only
+Route::resource('/admin/user', AdminUserController::class)->middleware(['auth'])->names('admin.users')->only([
+    'index', 'show'
+]);
+Route::resource('/user/user', UserUserController::class)->middleware(['auth'])->names('user.users')->only([
+    'index', 'show'
+]);

@@ -17,6 +17,7 @@ window.deleteConfirm = function (e) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
+        
       }).then((result) => {
         // if user confirms delete the form is submitted
         if (result.isConfirmed) {
