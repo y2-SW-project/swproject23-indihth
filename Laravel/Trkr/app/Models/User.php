@@ -18,6 +18,11 @@ class User extends Authenticatable
         return $this->hasMany(Goal::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
     // Many to many relationship created for future feature to be developed
     public function partnerships()
     {

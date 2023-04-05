@@ -12,7 +12,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
-        "okipa/laravel-form-components": "^1.2"
+        "okipa/laravel-form-components": "^1.2",
+        "realrashid/sweet-alert": "^6.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

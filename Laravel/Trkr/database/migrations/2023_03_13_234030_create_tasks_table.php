@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description', 250);
             $table->enum('type', ['Reading', 'Listening', 'Studying', 'Speaking']);
             $table->boolean('status');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('goal_id')->constrained()->onDelete('cascade');
             $table->timestamps(); 
         });

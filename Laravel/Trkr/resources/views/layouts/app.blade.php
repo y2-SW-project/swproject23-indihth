@@ -83,7 +83,7 @@
 
         <main class="py-4">
             {{-- Session flash messages --}}
-            @if (session()->get('success'))
+            {{-- @if (session()->get('success'))
                 <div class="alert alert-success">
                     {{ session()->get('success') }}
                 </div>
@@ -92,7 +92,10 @@
                 <div class="alert alert-danger">
                     {{ session()->get('danger') }}
                 </div>
-            @endif
+            @endif --}}
+
+            @include('sweetalert::alert')
+
 
             @yield('content')
         </main>

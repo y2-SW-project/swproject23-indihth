@@ -8,6 +8,8 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class GoalController extends Controller
 {
@@ -26,6 +28,8 @@ class GoalController extends Controller
             ->with('tasks')
             ->with('user')
             ->paginate(5);
+
+        // Alert::success('Success Title', 'Success Message');
 
         // Returns the goals index view and passes the goals variable with the logged in users' goals
         return view('admin.goals.index')->with('goals', $goals);
@@ -73,7 +77,7 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        return to_route('admin.goals.index');
+        return to_route('admin.goals.index')->with('toast_success', 'Goal Created Successfully!');
     }
 
     /**
@@ -136,7 +140,7 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        return to_route('admin.goals.show', $goal);
+        return to_route('admin.goals.show', $goal)->with('toast_success', 'Goal Updated Successfully!');
     }
 
     /**
@@ -152,6 +156,6 @@ class GoalController extends Controller
 
         $goal->delete();
 
-        return to_route('admin.goals.index');
+        return to_route('admin.goals.index')->with('toast_success', 'Goal Deleted Successfully!');
     }
 }

@@ -8,12 +8,6 @@ window.deleteConfirm = function (e) {
     e.preventDefault();
     var form = e.target.form;
 
-    //   Swal.fire(
-    //     'Good job!',
-    //     'You clicked the button!',
-    //     'success'
-    //   )
-
     // Can change colours to match design
       Swal.fire({
         title: 'Are you sure?',
@@ -24,13 +18,9 @@ window.deleteConfirm = function (e) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
+        // if user confirms delete the form is submitted
         if (result.isConfirmed) {
-          Swal.clickConfirm()
-          // Swal.fire(
-          //   'Deleted!',
-          //   'Your file has been deleted.',
-          //   'success'
-          // )
+          form.submit();
         }
       })
 }

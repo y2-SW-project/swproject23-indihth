@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(GoalSeeder::class);
-        $this->call(TaskSeeder::class);
-        $this->call(TaskPostSeeder::class);
-        $this->call(CommentSeeder::class);
+        $this->call(RoleUserSeeder::class);
+        // $this->call(GoalSeeder::class);
+        // $this->call(TaskSeeder::class);
+        // $this->call(TaskPostSeeder::class);
+        // $this->call(CommentSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

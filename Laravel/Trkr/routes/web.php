@@ -1,5 +1,5 @@
 <?php
-
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\admin\GoalController as AdminGoalController;
 use App\Http\Controllers\admin\TaskController as AdminTaskController;
 
@@ -9,6 +9,9 @@ use App\Http\Controllers\user\TaskController as UserTaskController;
 // use App\Http\Controllers\GoalController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    Alert::success('Success Title', 'Success Message');
     return view('welcome');
 });
 

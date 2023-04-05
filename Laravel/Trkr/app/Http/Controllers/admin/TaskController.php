@@ -7,6 +7,7 @@ use App\Models\Goal;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TaskController extends Controller
 {
@@ -31,7 +32,7 @@ class TaskController extends Controller
         $user->authorizeRoles('admin');
         // dd($id);
         // $goal = Goal::where('user_id', Auth::id())->get();
-        $task = Task::where('user_id', Auth::id())->get();
+        // $task = Task::where('user_id', Auth::id())->get();
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
         $goal_id = $id;
         // dd($id);
@@ -39,7 +40,7 @@ class TaskController extends Controller
         // $task = Task::find($goal);
         // dd($task->goal);
 
-        return view('admin.tasks.create')->with('task', $task)->with('type', $type)->with('goal_id', $goal_id);
+        return view('admin.tasks.create')->with('type', $type)->with('goal_id', $goal_id);
     }
 
     /**
@@ -60,14 +61,15 @@ class TaskController extends Controller
         ]);
 
         Task::create([
-            'user_id' => Auth::id(),
+            // 'user_id' => Auth::id(),
             'goal_id' => $request->goal_id,
             'status' => false,
             'title' => $request->title,
             'description' => $request->description
         ]);
 
-        return to_route('admin.goals.show', $request->goal_id);
+        return to_route('admin.goals.show', $request->goal_id)->with('toast_success', 'Task Created Successfully!');
+        
     }
 
     /**
@@ -110,8 +112,6 @@ class TaskController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        // dd($request->boolean('status'));
-        $user = Auth::user();
 
         $request->validate([
             'title' => 'required|max:50',
@@ -125,7 +125,7 @@ class TaskController extends Controller
             'description' => $request->description
         ]);
 
-        return to_route('admin.goals.show', $task->goal);
+        return to_route('admin.goals.show', $task->goal)->with('toast_success', 'Task Edited Successfully!');
     }
 
     /**
@@ -141,6 +141,6 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return to_route('admin.goals.show', $task->goal_id)->with('success','Task Deleted');
+        return to_route('admin.goals.show', $task->goal_id)->with('toast_success', 'Task Deleted Successfully!');
     }
 }
