@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Goal;
+use App\Models\Interest;
+use App\Models\InterestUser;
 use App\Models\Role;
 use App\Models\Task;
 use App\Models\User;
@@ -35,6 +37,7 @@ class UserSeeder extends Seeder
         User::factory(10)
             ->has(Goal::factory(1)
                 ->has(Task::factory(3)))
+            // ->has(InterestUser::factory(2))  //MUST FIX
             ->create();
 
         // User::factory()

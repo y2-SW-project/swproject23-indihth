@@ -35,6 +35,16 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Role', 'user_role');
     }
 
+    public function interests() 
+    {
+        return $this->belongsToMany('App\Models\Interest', 'interest_users');
+    }
+
+    public function interestUser() 
+    {
+        return $this->hasMany('App\Models\InterestUser', 'interest_users');
+    }
+
 
 
     // Function to check if a user is authorised to do a certain task
@@ -68,6 +78,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'about_me',
+        'level',
     ];
 
     /**

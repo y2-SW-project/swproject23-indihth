@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('level', ['Beginner', 'Intermediate', 'Advanced']);
-            $table->string('about_me')->nullable(); // Needs nullable because admin user isn't filled
+        Schema::create('interests', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -26,9 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('level');
-            $table->dropColumn('about_me');
-        });
+        Schema::dropIfExists('interests');
     }
 };
