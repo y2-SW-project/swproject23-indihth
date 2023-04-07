@@ -35,15 +35,18 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Role', 'user_role');
     }
 
+    // Many to many relationship, including the pivot table for a users' interests
     public function interests() 
     {
-        return $this->belongsToMany('App\Models\Interest', 'interest_users');
+        return $this->belongsToMany('App\Models\Interest', 'interest_users', 'user_id', 'interest_id');
     }
 
-    public function interestUser() 
+    // 1:M relationship between Countries and Users (countries or countrys?)
+    public function countries()
     {
-        return $this->hasMany('App\Models\InterestUser', 'interest_users');
+        return $this->hasMany(Country::class);
     }
+
 
 
 
@@ -79,7 +82,9 @@ class User extends Authenticatable
         'email',
         'password',
         'about_me',
+        'country',
         'level',
+        'user_image'
     ];
 
     /**

@@ -65,12 +65,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // Image storage
+        $user_image = request()->file('user_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
+        $extension = $user_image->getClientOriginalExtension();     // Gets file extension
+        $filename = date('Y-m-d-His') . '_' . request()->input('name') . '_' . $extension;  // Creates unique filename
+        $path = $user_image->storeAs('public/images', $filename);   // Stores the image in the public images under new filename
+
+
         // Replace 'return' with user variable
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_image' => $filename
         ]);
+
+
 
         // Assigns the 'user' role to all users created via the registration form
         $role_user = Role::where('name', 'user')->first();

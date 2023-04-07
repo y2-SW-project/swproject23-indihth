@@ -13,11 +13,13 @@
                                 {{ $user->name }}
                             </div>
                             <div class="card-body">
-                                @foreach ($user->goals as $goal)
-                                    <h5 class="card-title">{{ $goal->title }}</h5>
-                                    <h5 class="card-title">{{ $user->email }}</h5>
-                                    <p class="card-text">{{ Str::limit($goal->description, 200) }}</p>
+                                <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150" alt="user profile image">
+                                <p class="card-text">{{ $user->level }}</p>
+                                @foreach ($user->interests as $interest)
+                                    <p class="card-text">{{ $interest->name }}</p>
                                 @endforeach
+                                <h5 class="card-title">About Me</h5>
+                                <p class="card-text">{{ Str::limit($user->about_me, 200) }}</p>
                             </div>
                         </div>
                     </div>

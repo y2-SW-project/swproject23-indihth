@@ -14,9 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('level', ['Beginner', 'Intermediate', 'Advanced']);
-            $table->string('about_me')->nullable(); // Needs nullable because admin user isn't filled
-            $table->string('user_image')->nullable(); // Needs nullable because admin user isn't filled
+            $table->foreignId('country_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 
@@ -28,9 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('level');
-            $table->dropColumn('about_me');
-            $table->dropColumn('user_image');
+            $table->dropForeign(['country_id']);
         });
     }
 };
