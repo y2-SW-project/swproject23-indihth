@@ -9,11 +9,16 @@
                         <div class="card-body">
                             <a href="{{ route('admin.users.show', $user->id) }}">
                                 <h5 class="card-title d-flex justify-content-between">
-                                    <div>{{ $user->name }}</div>
-                                    <p class="card-text">{{ $user->country }}</p>
+                                    <div>
+                                        {{ $user->name }}
+                                    </div>
+                                    <img class="" width="30"
+                                        src="{{ asset('storage/images/flags/' . $user->country->image) }}" width="150"
+                                        alt="user profile image">
                                 </h5>
                             </a>
-                            <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150" alt="user profile image">
+                            <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
+                                alt="user profile image">
                             {{-- Must loop through goals as the relationship is 1:M, even though only 1 goal per user exists --}}
                             @foreach ($user->goals as $goal)
                                 <p class="card-text">{{ $goal->language }} | {{ $user->level }}</p>

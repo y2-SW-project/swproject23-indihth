@@ -16,9 +16,28 @@ class CountrySeeder extends Seeder
     public function run()
     {
         Country::create([
+            'name' => 'Austria',
+            'image' => 'austria_flag.png'
+        ]);
+        Country::create([
+            'name' => 'France',
+            'image' => 'france_flag.png'
+        ]);
+        Country::create([
             'name' => 'Ireland',
-            'image' => 'placeholder'
-    ]);
-       
+            'image' => 'ireland_flag.png'
+        ]);
+        Country::create([
+            'name' => 'Italy',
+            'image' => 'italy_flag.png'
+        ]);
+        Country::create([
+            'name' => 'Sweden',
+            'image' => 'sweden_flag.png'
+        ]);
+        Country::create([
+            'name' => 'Ukraine',
+            'image' => 'ukraine_flag.png'
+        ]);
     }
 }

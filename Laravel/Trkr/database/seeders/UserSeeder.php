@@ -39,22 +39,5 @@ class UserSeeder extends Seeder
                 ->has(Task::factory(3)))
             // ->has(InterestUser::factory(2))  //MUST FIX
             ->create();
-
-        // User::factory()
-        // ->times(10)
-        // ->hasGoals()
-        // ->create();
-
-
-        //  $user = new User();
-        //  $user->name = 'Sandra Kaluiokalani';
-        //  $user->email = 'sandra@email.ie';
-        //  $user->password = Hash::make('password');
-        //  $user->save();
-        //  $user->roles()->attach($role_user);
-
-        // User::factory()
-        // ->times(1)
-        // ->create();
     }
 }

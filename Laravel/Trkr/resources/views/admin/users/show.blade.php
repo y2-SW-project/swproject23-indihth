@@ -6,6 +6,7 @@
             <div class="col-md-8 d-flex">
                 <div class="row">
                     <div class="col">
+                        {{-- @dd($user->countrys); --}}
 
                         {{-- Display User Information --}}
                         <div class="card my-3">
@@ -13,8 +14,22 @@
                                 {{ $user->name }}
                             </div>
                             <div class="card-body">
-                                <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150" alt="user profile image">
+                                <div class="d-flex justify-content-between">
+                                    <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
+                                        alt="user profile image">
+
+                                    <div>
+                                        <p class="card-text mb-1">
+                                            {{ $user->country->name }}
+                                        </p>
+                                        <img class="" width="50"
+                                            src="{{ asset('storage/images/flags/' . $user->country->image) }}"
+                                            width="150" alt="user profile image">
+                                    </div>
+                                </div>
                                 <p class="card-text">{{ $user->level }}</p>
+
+                                <h5 class="card-title">Interests</h5>
                                 @foreach ($user->interests as $interest)
                                     <p class="card-text">{{ $interest->name }}</p>
                                 @endforeach

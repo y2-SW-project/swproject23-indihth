@@ -12,6 +12,6 @@ class Country extends Model
      // 1:M relationship between Countries and Users
      public function users() 
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }

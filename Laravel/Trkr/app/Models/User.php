@@ -42,9 +42,9 @@ class User extends Authenticatable
     }
 
     // 1:M relationship between Countries and Users (countries or countrys?)
-    public function countries()
+    public function country()
     {
-        return $this->hasMany(Country::class);
+        return $this->belongsTo(Country::class);
     }
 
 
