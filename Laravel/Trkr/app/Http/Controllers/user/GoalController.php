@@ -89,7 +89,7 @@ class GoalController extends Controller
 
         $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
         $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
-        $user = Auth::user();
+        $user = Auth::user();   // Not needed. test removing
 
         return view('user.goals.show', with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done]));
     }

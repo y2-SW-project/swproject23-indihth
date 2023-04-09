@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\Interest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,9 +69,9 @@ class UserController extends Controller
         // TODO Create a languages table, easier to manage and update
         $languages = ['German', 'Spanish', 'French', 'Italian'];
         $countries = Country::all();
-        // dd($countries);
+        $interests = Interest::all();
 
-        return view('admin.users.edit')->with(compact('user', 'languages', 'countries'));
+        return view('admin.users.edit')->with(compact('user', 'languages', 'countries', 'interests'));
     }
 
     /**
@@ -91,36 +92,39 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'about_me' => 'required',
-            // 'country' => 'required',
+            'country_id' => 'required',
             'language' => 'required',
-            // 'image' => 'file'
+            'image' => 'file'
         ]);
 
-        // if($request->hasFile('image')){
-        //     dd("has file");
-        //     $filename = $request->image->getClientOriginalName();
-        //     $request->image->storeAs('images',$filename,'public');
-        //     Auth()->user()->update(['image'=>$filename]);
-        // }
-
+        // Check if a file was uploaded in the image field
         if ($request->hasfile('image')) {
             $user_image = request()->file('image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
             $extension = $user_image->getClientOriginalExtension();     // Gets file extension
             $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
             $path = $user_image->storeAs('public/images', $filename);   // Stores the image in the public images under new filename
 
-
+            // Update user image with new filename
             $user->update([
                 'user_image' => $filename
             ]);
         }
-        // dd((int)$request->country_id);
+
+      
+
+        // Update user
         $user->update([
             'name' => $request->name,
             'about_me' => $request->about_me,
-            'country_id' => (int)$request->country_id,
-            'language' => $request->language
+            'country_id' => (int)$request->country_id
         ]);
+
+        // Update language in the Goal table
+        foreach ($user->goals as $goal) {
+            $goal->update([
+                'language' => $request->language
+            ]);
+        }
 
 
         return to_route('admin.users.show', $user->id)->with('toast_success', 'User Updated Successfully!');
@@ -134,8 +138,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
+        $userAuth = Auth::user();
+        $userAuth->authorizeRoles('admin');
 
         $user->delete();
 

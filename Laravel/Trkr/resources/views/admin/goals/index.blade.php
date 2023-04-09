@@ -20,14 +20,6 @@
                   {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
                 </div>
               </div>
-{{-- 
-            <div class="card">
-                <div class="card-header">{{ $goal->title }}</div>
-                <div class="card-body">
-                   {{ $goal->title }}
-                   test
-                </div>
-            </div> --}}
             @endforeach
             {!! $goals->links() !!}
         </div>

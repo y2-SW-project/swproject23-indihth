@@ -50,7 +50,12 @@ class User extends Authenticatable
     }
 
 
-
+    // Checks if user is Admin, no errors (used in nav to display items only to Users)
+    public function isAdministrator()
+    {
+        return $this->hasRole('Admin');
+    } 
+ 
 
     // Function to check if a user is authorised to do a certain task
     // Returns error otherwise
@@ -84,7 +89,8 @@ class User extends Authenticatable
         'email',
         'password',
         'about_me',
-        'country',
+        'country_id',
+        'language',
         'level',
         'user_image'
     ];

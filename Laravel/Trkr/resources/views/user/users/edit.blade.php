@@ -8,7 +8,7 @@
                 <div class="card py-3 px-4">
 
                     <x:form::form :bind="$user" class="row" method="put" enctype="multipart/form-data"
-                        :action="route('admin.users.update', $user)">
+                        :action="route('user.users.update', $user)">
 
 
                         {{-- Personal Details --}}
@@ -50,7 +50,7 @@
                             {{-- Buttons --}}
                             <div class="col-12 mt-2">
                                 {{-- Redirects back to the user show with id --}}
-                                <x:form::button.link href="{{ route('admin.users.show', $user->id) }}"
+                                <x:form::button.link href="{{ route('user.users.show', $user->id) }}"
                                     class="btn-secondary me-3">
                                     {{ __('Cancel') }}</x:form::button.link>
                                 <x:form::button.submit>Save </x:form::button.submit>

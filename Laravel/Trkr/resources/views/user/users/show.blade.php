@@ -1,12 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 d-flex">
+            <div class="col-md-10 d-flex">
                 <div class="row">
                     <div class="col">
-                        {{-- @dd($user->countrys); --}}
 
                         {{-- Display User Information --}}
                         <div class="card my-3">
@@ -15,7 +13,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
+                                    <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150"
                                         alt="user profile image">
 
                                     <div>
@@ -27,10 +25,13 @@
                                             width="150" alt="user profile image">
                                     </div>
                                 </div>
-                                <p class="card-text">{{ $user->level }}</p>
+                                {{-- Must loop through goals as the relationship is 1:M, even though only 1 goal per user exists --}}
+                                @foreach ($user->goals as $goal)
+                                    <p class="card-text">{{ $goal->language }} | {{ $user->level }}</p>
+                                @endforeach
 
                                 <h5 class="card-title">Interests</h5>
-                                @foreach ($user->interests->take(2) as $interest)
+                                @foreach ($user->interests as $interest)
                                     <p class="card-text">{{ $interest->name }}</p>
                                 @endforeach
                                 <h5 class="card-title">About Me</h5>
@@ -39,19 +40,20 @@
                         </div>
                     </div>
 
-                    {{-- Display Goal Information --}}
                     <div class="col">
-                        <div class="card my-3">
-                            <div class="card-header">
-                                {{ $user->name }}
-                            </div>
-                            <div class="card-body">
-                                @foreach ($user->goals as $goal)
-                                    <h5 class="card-title">{{ $goal->title }}</h5>
-                                    <h5 class="card-title">{{ $user->email }}</h5>
-                                    <p class="card-text">{{ Str::limit($goal->description, 200) }}</p>
-                                @endforeach
-                            </div>
+                        {{-- Goals - no access to full goal view with tasks --}}
+                        <div class="col">
+                            @foreach ($user->goals as $goal)
+                                <div class="card my-3">
+                                    <div class="card-header">
+                                      {{ $goal->title }}
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $goal->language }}</h5>
+                                        <p class="card-text">{{ Str::limit($goal->description, 200) }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -62,6 +64,7 @@
         <div class="row justify-content-center">
 
         </div>
-
     </div>
+    {{-- Include for SweetAlert js package --}}
+    @include('sweetalert::alert')
 @endsection

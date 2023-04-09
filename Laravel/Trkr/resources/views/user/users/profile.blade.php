@@ -3,21 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10 d-flex">
+            <div class="col-md-8 d-flex">
                 <div class="row">
                     <div class="d-flex">
                         {{-- Edit Goal Button --}}
-                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary me-2">Edit User</a>
-
-                        {{-- Delete Goal Button --}}
-                        <x:form::form action="{{ route('admin.users.destroy', $user) }}" method="delete">
-                            {{-- @method() and @csrf() not needed as form::form component automatically includes these --}}
-
-                            <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete Goal
-                            </x:form::button.submit>
-                        </x:form::form>
+                        <a href="{{ route('user.users.edit', $user) }}" class="btn btn-primary me-2">Edit User</a>
                     </div>
                     <div class="col">
+
                         {{-- Display User Information --}}
                         <div class="card my-3">
                             <div class="card-header">
@@ -52,23 +45,19 @@
                         </div>
                     </div>
 
+                    {{-- Display Goal Information --}}
                     <div class="col">
-                        {{-- Admin can view all Goals and Tasks--}}
-                        <div class="col">
-                            @foreach ($user->goals as $goal)
-                                <div class="card my-3">
-                                    <div class="card-header">
-                                        <a href="{{ route('admin.goals.show', $goal->id) }}"> {{ $goal->title }} </a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $goal->language }}</h5>
-                                        <p class="card-text">{{ Str::limit($goal->description, 200) }}</p>
-                                        @foreach ($goal->tasks as $task)
-                                            <p class="card-text">{{ $task->title }}</p>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
+                        <div class="card my-3">
+                            <div class="card-header">
+                                {{ $user->name }}
+                            </div>
+                            <div class="card-body">
+                                @foreach ($user->goals as $goal)
+                                    <h5 class="card-title">{{ $goal->title }}</h5>
+                                    <h5 class="card-title">{{ $user->email }}</h5>
+                                    <p class="card-text">{{ Str::limit($goal->description, 200) }}</p>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
