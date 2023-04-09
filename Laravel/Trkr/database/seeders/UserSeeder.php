@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Enumerable;
 
 class UserSeeder extends Seeder
 {
@@ -33,11 +34,19 @@ class UserSeeder extends Seeder
         $admin->save();    // save() inserts the new record to the db
         $admin->roles()->attach($role_admin);  // attaches the admin role to the new user
 
+        // Interests are seeded before Users so they can be accessed and attached here
+        $interests = Interest::all();
+
         // Creates multiple new users
         User::factory(10)
+            // ->hasInterests(2)  //MUST FIX
+            // ->has(InterestUser::factory(2))  //MUST FIX
             ->has(Goal::factory(1)
                 ->has(Task::factory(3)))
-            // ->has(InterestUser::factory(2))  //MUST FIX
-            ->create();
+            
+            ->create()->each(function ($user) use($interests) {
+                // Attaches two random Interests to each User
+                $user->interests()->attach($interests->random(2));  
+            });
     }
 }

@@ -5,19 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8 d-flex">
                 <div class="row">
-                    <div class="d-flex">
-                        {{-- Edit Goal Button --}}
-                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary me-2">Edit User</a>
-
-                        {{-- Delete Goal Button --}}
-                        <x:form::form action="{{ route('admin.users.destroy', $user) }}" method="delete">
-                            {{-- @method() and @csrf() not needed as form::form component automatically includes these --}}
-
-                            <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete Goal
-                            </x:form::button.submit>
-                        </x:form::form>
-                    </div>
                     <div class="col">
+                        {{-- @dd($user->countrys); --}}
 
                         {{-- Display User Information --}}
                         <div class="card my-3">
@@ -26,7 +15,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150"
+                                    <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
                                         alt="user profile image">
 
                                     <div>
@@ -38,13 +27,10 @@
                                             width="150" alt="user profile image">
                                     </div>
                                 </div>
-                                {{-- Must loop through goals as the relationship is 1:M, even though only 1 goal per user exists --}}
-                                @foreach ($user->goals as $goal)
-                                    <p class="card-text">{{ $goal->language }} | {{ $user->level }}</p>
-                                @endforeach
+                                <p class="card-text">{{ $user->level }}</p>
 
                                 <h5 class="card-title">Interests</h5>
-                                @foreach ($user->interests as $interest)
+                                @foreach ($user->interests->take(2) as $interest)
                                     <p class="card-text">{{ $interest->name }}</p>
                                 @endforeach
                                 <h5 class="card-title">About Me</h5>
@@ -76,7 +62,6 @@
         <div class="row justify-content-center">
 
         </div>
+
     </div>
-    {{-- Include for SweetAlert js package --}}
-    @include('sweetalert::alert')
 @endsection

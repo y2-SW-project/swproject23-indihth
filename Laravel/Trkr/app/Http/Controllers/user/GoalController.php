@@ -136,7 +136,7 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        return to_route('user.goals.show', $goal);
+        return to_route('user.goals.show', $goal)->with('toast_success', 'Goal Updated Successfully!');
     }
 
     /**

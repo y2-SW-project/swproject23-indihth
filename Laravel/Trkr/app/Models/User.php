@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Ramsey\Uuid\Type\Integer;
 
 class User extends Authenticatable
 {
@@ -38,7 +39,8 @@ class User extends Authenticatable
     // Many to many relationship, including the pivot table for a users' interests
     public function interests() 
     {
-        return $this->belongsToMany('App\Models\Interest', 'interest_users', 'user_id', 'interest_id');
+        return $this->belongsToMany(Interest::class, 'interest_users');
+        // return $this->belongsToMany(Integer::class, 'interest_users', 'user_id', 'interest_id');
     }
 
     // 1:M relationship between Countries and Users (countries or countrys?)

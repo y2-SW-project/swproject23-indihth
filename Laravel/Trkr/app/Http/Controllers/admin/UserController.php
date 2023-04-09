@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,15 +24,15 @@ class UserController extends Controller
         // Gets users except for admin, should replace with check for role
         // $users = User::whereNot('name', 'Glenn Sturgis')
         $users = User::latest('updated_at')
-        ->with('goals')
-        ->paginate(5);
+            ->whereNot('id', 1)     // Don't include admin user, always id of 1
+            ->paginate(8);
 
-        // $goals = $users->goals;
-        // dd($goals);
+        // $users = $users->users;
+        // dd($users);
         // $users = Role::where('name', 'user')->first()->users()->get();
         // dd($users);
 
-        // Returns the goals index view and passes the goals variable with the logged in users' goals
+        // Returns the users index view and passes the users variable with the logged in users' users
         return view('admin.users.index')->with('users', $users);
     }
 
@@ -59,4 +60,85 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function edit(User $user)
+    {
+        $userAuth = Auth::user();
+        $userAuth->authorizeRoles('admin');
+        // TODO Create a languages table, easier to manage and update
+        $languages = ['German', 'Spanish', 'French', 'Italian'];
+        $countries = Country::all();
+        // dd($countries);
+
+        return view('admin.users.edit')->with(compact('user', 'languages', 'countries'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $userAuth = Auth::user();
+        $userAuth->authorizeRoles('admin');
+
+        // dd($request->image);
+
+        // TODO: Add validation on 'language' to confirm it's a valid option
+        $request->validate([
+            'name' => 'required|max:50',
+            'about_me' => 'required',
+            // 'country' => 'required',
+            'language' => 'required',
+            // 'image' => 'file'
+        ]);
+
+        // if($request->hasFile('image')){
+        //     dd("has file");
+        //     $filename = $request->image->getClientOriginalName();
+        //     $request->image->storeAs('images',$filename,'public');
+        //     Auth()->user()->update(['image'=>$filename]);
+        // }
+
+        if ($request->hasfile('image')) {
+            $user_image = request()->file('image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
+            $extension = $user_image->getClientOriginalExtension();     // Gets file extension
+            $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
+            $path = $user_image->storeAs('public/images', $filename);   // Stores the image in the public images under new filename
+
+
+            $user->update([
+                'user_image' => $filename
+            ]);
+        }
+        // dd((int)$request->country_id);
+        $user->update([
+            'name' => $request->name,
+            'about_me' => $request->about_me,
+            'country_id' => (int)$request->country_id,
+            'language' => $request->language
+        ]);
+
+
+        return to_route('admin.users.show', $user->id)->with('toast_success', 'User Updated Successfully!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $user->delete();
+
+        return to_route('admin.users.index')->with('toast_success', 'User Deleted Successfully!');
+    }
 }

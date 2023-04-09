@@ -16,7 +16,7 @@ class InterestUserSeeder extends Seeder
     public function run()
     {
         InterestUser::factory()
-        ->times(20)
+        ->times(10)
         ->create();
     }
 }

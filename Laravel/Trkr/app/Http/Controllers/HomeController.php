@@ -41,4 +41,21 @@ class HomeController extends Controller
         }
         return redirect()->route($home);
     }
+
+    public function indexUsers()
+    {
+        // verify they are logged in
+        $user = Auth::user();
+        $home = 'home';
+
+        // Redirects to the admin index if admin
+        if($user->hasRole('admin')){
+            $home = 'admin.users.index';
+        }
+        // Redirects to the user index if user
+        else if ($user->hasRole('user')){
+            $home = 'user.users.index';
+        }
+        return redirect()->route($home);
+    }
 }

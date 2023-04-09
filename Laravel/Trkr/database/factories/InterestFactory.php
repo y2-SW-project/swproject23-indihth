@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Interest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,10 @@ class InterestFactory extends Factory
      */
     public function definition()
     {
+        $interestsArray = ['Music', 'Sport', 'Art', 'Animals', 'Literature', 'Politics'];
+        
+        $interests = Interest::createMany($interestsArray);
+
         return [
             //
         ];

@@ -33,4 +33,6 @@
         </div>
     </div>
 </div>
+{{-- Include for SweetAlert js package --}}
+@include('sweetalert::alert')
 @endsection

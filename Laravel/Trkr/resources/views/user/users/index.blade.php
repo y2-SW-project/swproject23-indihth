@@ -7,7 +7,7 @@
                 <div class="col d-flex">
                     <div class="card my-3" style="width: 18rem;">
                         <div class="card-body">
-                            <a href="{{ route('admin.users.show', $user->id) }}">
+                            <a href="{{ route('user.users.show', $user->id) }}">
                                 <h5 class="card-title d-flex justify-content-between">
                                     <div>
                                         {{ $user->name }}
