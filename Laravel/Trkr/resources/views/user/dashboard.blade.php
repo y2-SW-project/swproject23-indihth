@@ -17,7 +17,7 @@
                         </div>
 
                         {{-- Placeholder Chart Image --}}
-                        <div class="row card">
+                        <article class="row card">
                             <div class="card-body">
                                 <h5 class="card-title">Tracking History</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Hours for past 3 months</h6>
@@ -26,14 +26,14 @@
                                         class="img-fluid border border-4 border-white rounded rounded-5">
                                 </div>
                             </div>
-                        </div>
+                        </article>
 
                         {{-- Compelted Task Feed --}}
-                        <div class="row">
+                        <article class="row">
                             <div class="col">
                                 <div class="my-3">
-                                    <h3 class="h3">Activity Feed</h3>
-                                    @foreach ($done as $task)
+                                    <h3 class="h3">Partner Activity Feed</h3>
+                                    @foreach ($partnerDone as $task)
                                         <div class="card mb-3">
                                             <div class="card-body">
                                                 <h5 class="card-title"> {{ $task->title }}</h5>
@@ -46,7 +46,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
+                        </article>
                         {{-- END Task Feed --}}
                     </aside>
 

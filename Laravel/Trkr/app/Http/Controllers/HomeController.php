@@ -27,9 +27,23 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-     // Once a user gets to the home page this function will
-     // redirect to the correct index route depending on their user role
-   
+    // Once a user gets to the home page this function will
+    // redirect to the correct index route depending on their user role
+
+    public function home()
+    {
+        // $user = Auth::user();
+
+        // if ($user->hasRole('admin')) {
+        //     return redirect()->route('admin.goals.index');
+        // }
+        // // Redirects to the user index if user
+        // else if ($user->hasRole('user')) {
+        //     $home = 'user.dashboard';
+        // }
+        // return redirect()->route($home);
+    }
+
     public function indexGoals()
     {
         // verify they are logged in
@@ -37,11 +51,11 @@ class HomeController extends Controller
         $home = 'goals';
 
         // Redirects to the admin index if admin
-        if($user->hasRole('admin')){
+        if ($user->hasRole('admin')) {
             $home = 'admin.goals.index';
         }
         // Redirects to the user index if user
-        else if ($user->hasRole('user')){
+        else if ($user->hasRole('user')) {
             $home = 'user.goals.index';
         }
         return redirect()->route($home);
@@ -54,11 +68,11 @@ class HomeController extends Controller
         $home = 'home';
 
         // Redirects to the admin index if admin
-        if($user->hasRole('admin')){
+        if ($user->hasRole('admin')) {
             $home = 'admin.users.index';
         }
         // Redirects to the user index if user
-        else if ($user->hasRole('user')){
+        else if ($user->hasRole('user')) {
             $home = 'user.users.index';
         }
         return redirect()->route($home);
@@ -69,29 +83,33 @@ class HomeController extends Controller
         $user = Auth::user();
         $home = 'home';
 
+        // Immediately redirects admin to goal index
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.goals.index');
+        }
+
         $goal = Goal::where('user_id', $user->id)->get();
+        $partnerGoal = $user->partners->first()->goals->first()->id;
 
         // Using first() because goal is a M:N to user but only 1 Goal was seeded per user
         // Should loop through goals on dashboard view to enable displaying multiple goals later on
         $toDo = Task::where('status', 0)->where('goal_id', $goal->first()->id)->get();
-        
-        $done = Task::where('status', 1)
-        ->where('goal_id', $goal->first()->id)
-        ->latest('updated_at')
-        ->get();
+
+        $partnerDone = Task::where('status', 1)
+            ->where('goal_id', $partnerGoal)
+            ->latest('updated_at')
+            ->get();
+
+
         // Put url into session data to redirect back after editing task
         Session::put('url', request()->fullUrl());
 
-        // Redirects to the admin index if admin
-        if($user->hasRole('admin')){
-            $home = 'admin.dashboard';    // Send admin to own dashboard? Or don't show dashboard nav item
-        }
-        // Redirects to the user index if user
-        else if ($user->hasRole('user')){
-            $home = 'user.dashboard';
-        }
+        // // Sets redirect
+        // if ($user->hasRole('user')) {
+        //     $home = 'user.dashboard';
+        // }
 
-        return view($home, with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done, "user" => $user]));
+        return view('user.dashboard', with(["goal" => $goal, "toDo" => $toDo, "partnerDone" => $partnerDone, "user" => $user]));
     }
 
     public function profile()
@@ -101,11 +119,11 @@ class HomeController extends Controller
         $home = 'home';
 
         // Redirects to the admin index if admin
-        if($user->hasRole('admin')){
+        if ($user->hasRole('admin')) {
             $home = 'admin.users.profile';
         }
         // Redirects to the user index if user
-        else if ($user->hasRole('user')){
+        else if ($user->hasRole('user')) {
             $home = 'user.users.profile';
         }
         return view($home)->with('user', $user);

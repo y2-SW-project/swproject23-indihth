@@ -42,6 +42,12 @@ class User extends Authenticatable
         $this->partners()->detach($user->id);
     }
 
+    // Replaces existing partner with new one
+    public function replacePartner(User $user)
+    {
+        $this->partners()->sync($user->id);
+    }
+
     // this function allows you do $user->roles which will return all the roles for that user
     public function roles()
     {
