@@ -21,7 +21,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->sentences(3, true),
             'type' => $this->faker->randomElement(['Reading', 'Listening', 'Studying', 'Speaking']),
             'status' => $this->faker->numberBetween(0, 1),
-            'updated_at' => $this->faker->dateTimeThisWeek(),
+            'updated_at' => $this->faker->dateTimeBetween('-5 days', 'now'),
         ];
     }
 }

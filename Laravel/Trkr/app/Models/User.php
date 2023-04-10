@@ -25,9 +25,21 @@ class User extends Authenticatable
     }
 
     // Many to many relationship created for future feature to be developed
-    public function partnerships()
+    public function partners()
     {
-        return $this->hasMany(Partnership::class);
+        return $this->belongsToMany(User::class, 'partner_user', 'user_id', 'partner_id');
+    }
+
+    // Add a new partner
+    public function addPartner(User $user)
+    {
+        $this->partners()->attach($user->id);
+    }
+
+    // Remove a partner
+    public function removePartner(User $user)
+    {
+        $this->partners()->detach($user->id);
     }
 
     // this function allows you do $user->roles which will return all the roles for that user
@@ -37,7 +49,7 @@ class User extends Authenticatable
     }
 
     // Many to many relationship, including the pivot table for a users' interests
-    public function interests() 
+    public function interests()
     {
         return $this->belongsToMany(Interest::class, 'interest_users');
         // return $this->belongsToMany(Integer::class, 'interest_users', 'user_id', 'interest_id');
@@ -54,8 +66,8 @@ class User extends Authenticatable
     public function isAdministrator()
     {
         return $this->hasRole('Admin');
-    } 
- 
+    }
+
 
     // Function to check if a user is authorised to do a certain task
     // Returns error otherwise

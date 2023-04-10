@@ -48,5 +48,7 @@ class UserSeeder extends Seeder
                 // Attaches two random Interests to each User
                 $user->interests()->attach($interests->random(2));  
             });
+
+        
     }
 }

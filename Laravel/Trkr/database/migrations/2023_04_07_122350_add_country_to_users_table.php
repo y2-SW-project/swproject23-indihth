@@ -26,6 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            // $table->dropColumn('country_id');
             $table->dropForeign(['country_id']);
         });
     }
