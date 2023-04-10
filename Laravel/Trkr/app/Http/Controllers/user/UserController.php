@@ -37,6 +37,34 @@ class UserController extends Controller
         return view('user.users.index')->with('users', $users);
     }
 
+    public static function removePartner(User $user)
+    {
+        $userAuth = Auth::user(); 
+        $userAuth->authorizeRoles('user');
+
+        if ($userAuth->removePartner($user)) {
+            $toast_success = 'Partner Removed Successfully!';
+            dd("success remove partner");
+        };
+
+        $toast_error = 'Partner Updated Failed!';
+        return view('user.users.show', $user)->with(compact('toast_error', 'user'));
+    }
+
+    public static function addPartner(User $user)
+    {
+        $userAuth = Auth::user(); 
+        $userAuth->authorizeRoles('user');
+
+        if ($userAuth->addPartner($user)) {
+            $toast_success = 'Partner Added Successfully!';
+            dd("success add partner");
+        };
+
+        $toast_error = 'Partner Updated Failed!';
+        return view('user.users.show', $user)->with(compact('toast_error', 'user'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,11 +121,11 @@ class UserController extends Controller
         $userAuth = Auth::user();
         $userAuth->authorizeRoles('user');
 
-       // Authorise user first
-       if ($user->id != Auth::id()) {
-        //403 error forbidden
-        return abort(403);
-    }
+        // Authorise user first
+        if ($user->id != Auth::id()) {
+            //403 error forbidden
+            return abort(403);
+        }
 
         // TODO: Add validation on 'language' to confirm it's a valid option
         $request->validate([
@@ -120,8 +148,6 @@ class UserController extends Controller
                 'user_image' => $filename
             ]);
         }
-
-
 
         // Update user
         $user->update([

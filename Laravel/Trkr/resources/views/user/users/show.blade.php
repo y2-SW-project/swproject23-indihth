@@ -30,6 +30,22 @@
                                     <p class="card-text">{{ $goal->language }} | {{ $user->level }}</p>
                                 @endforeach
 
+                                {{-- Remove Partner --}}
+                                {{-- <x:form::form action="{{ route('user.users.removePartner', $user) }}" method="post">
+                                <input type="hidden" name="profile_id" value="{{  $user }}">
+                                <x:form::button.submit>Removed Partner </x:form::button.submit>
+                                </x:form::form> --}}
+
+                                {{-- Add Partner --}}
+                                {{-- <x:form::form action="{{ route('user.users.addPartner', $user) }}" method="post">
+                                <input type="hidden" name="profile_id" value="{{  $user }}">
+                                <x:form::button.submit>Add Partner </x:form::button.submit>
+                                </x:form::form> --}}
+
+                                {{-- <a href="{{ route('user.users.replacePartner', $user) }}" class="btn btn-primary me-2">
+                                    Request as Partner</a> --}}
+                   
+
                                 <h5 class="card-title">Interests</h5>
                                 @foreach ($user->interests as $interest)
                                     <p class="card-text">{{ $interest->name }}</p>

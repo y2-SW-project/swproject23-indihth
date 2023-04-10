@@ -30,20 +30,6 @@ class HomeController extends Controller
     // Once a user gets to the home page this function will
     // redirect to the correct index route depending on their user role
 
-    public function home()
-    {
-        // $user = Auth::user();
-
-        // if ($user->hasRole('admin')) {
-        //     return redirect()->route('admin.goals.index');
-        // }
-        // // Redirects to the user index if user
-        // else if ($user->hasRole('user')) {
-        //     $home = 'user.dashboard';
-        // }
-        // return redirect()->route($home);
-    }
-
     public function indexGoals()
     {
         // verify they are logged in
@@ -81,7 +67,6 @@ class HomeController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $home = 'home';
 
         // Immediately redirects admin to goal index
         if ($user->hasRole('admin')) {
@@ -100,14 +85,8 @@ class HomeController extends Controller
             ->latest('updated_at')
             ->get();
 
-
         // Put url into session data to redirect back after editing task
         Session::put('url', request()->fullUrl());
-
-        // // Sets redirect
-        // if ($user->hasRole('user')) {
-        //     $home = 'user.dashboard';
-        // }
 
         return view('user.dashboard', with(["goal" => $goal, "toDo" => $toDo, "partnerDone" => $partnerDone, "user" => $user]));
     }
