@@ -7,6 +7,7 @@ use App\Models\Goal;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TaskController extends Controller
 {
@@ -31,7 +32,7 @@ class TaskController extends Controller
         $user->authorizeRoles('user');
         // dd($id);
         // $goal = Goal::where('user_id', Auth::id())->get();
-        $task = Task::where('user_id', Auth::id())->get();
+        // $task = Task::where('user_id', Auth::id())->get();
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
         $goal_id = $id;
         // dd($id);
@@ -39,7 +40,7 @@ class TaskController extends Controller
         // $task = Task::find($goal);
         // dd($task->goal);
 
-        return view('user.tasks.create')->with('task', $task)->with('type', $type)->with('goal_id', $goal_id);
+        return view('user.tasks.create')->with('type', $type)->with('goal_id', $goal_id);
     }
 
     /**
@@ -60,12 +61,24 @@ class TaskController extends Controller
         ]);
 
         Task::create([
-            'user_id' => Auth::id(),
             'goal_id' => $request->goal_id,
             'status' => false,
             'title' => $request->title,
             'description' => $request->description
         ]);
+
+       // If the user comes from Dashboard, session data will exist for it, so redirect there
+       if (session('dashboard')) {
+        // Stores the session data url in variable
+        $url = session('dashboard');        
+
+        // Removes the data from session
+        // Without, controller will redirect to dashboard from goals view too
+        $request->session()->forget('name'); 
+
+        // Redirect using session data stored in variable
+        return redirect($url);
+    }
 
         return to_route('user.goals.show', $request->goal_id);
     }
@@ -92,7 +105,6 @@ class TaskController extends Controller
         $user->authorizeRoles('user');
 
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
-        // $goal_id = $id;
 
         return view('user.tasks.edit')->with('task', $task)->with('type', $type);
         // return view('tasks.edit')->with('task', $task)->with('type', $type)->with('goal_id', $goal_id);
@@ -124,6 +136,13 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description
         ]);
+
+        // If the user comes from Dashboard, session data will exist for it, so redirect there
+        if (session('dashboard')) {
+            $url = session('dashboard');        
+            $request->session()->forget('name'); 
+            return redirect($url);
+        }
 
         return to_route('user.goals.show', $task->goal);
     }

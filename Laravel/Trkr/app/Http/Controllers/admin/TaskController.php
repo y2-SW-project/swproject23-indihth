@@ -61,7 +61,6 @@ class TaskController extends Controller
         ]);
 
         Task::create([
-            // 'user_id' => Auth::id(),
             'goal_id' => $request->goal_id,
             'status' => false,
             'title' => $request->title,

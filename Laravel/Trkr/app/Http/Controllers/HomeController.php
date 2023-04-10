@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -69,12 +70,14 @@ class HomeController extends Controller
         $home = 'home';
 
         $goal = Goal::where('user_id', $user->id)->get();
-        
+
         // Using first() because goal is a M:N to user but only 1 Goal was seeded per user
         // Should loop through goals on dashboard view to enable displaying multiple goals later on
         $toDo = Task::where('status', 0)->where('goal_id', $goal->first()->id)->get();
         $done = Task::where('status', 1)->where('goal_id', $goal->first()->id)->get();
         
+        // Put Dashboard url into session data to redirect back after editing task
+        Session::put('dashboard', request()->fullUrl());
 
         // Redirects to the admin index if admin
         if($user->hasRole('admin')){
