@@ -68,13 +68,13 @@ class TaskController extends Controller
         ]);
 
        // If the user comes from Dashboard, session data will exist for it, so redirect there
-       if (session('dashboard')) {
+       if (session('url')) {
         // Stores the session data url in variable
-        $url = session('dashboard');        
+        $url = session('url');        
 
         // Removes the data from session
-        // Without, controller will redirect to dashboard from goals view too
-        $request->session()->forget('name'); 
+        // Without, controller will redirect to url from goals view too
+        $request->session()->forget('url'); 
 
         // Redirect using session data stored in variable
         return redirect($url);
@@ -138,13 +138,14 @@ class TaskController extends Controller
         ]);
 
         // If the user comes from Dashboard, session data will exist for it, so redirect there
-        if (session('dashboard')) {
-            $url = session('dashboard');        
-            $request->session()->forget('name'); 
+        if (session('url')) {
+            $url = session('url');        
+            $request->session()->forget('url'); 
             return redirect($url);
-        }
+        }   // Could be improved
 
         return to_route('user.goals.show', $task->goal);
+        // return to_route('user.goals.show', $task->goal);
     }
 
     /**

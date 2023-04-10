@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             // ->hasInterests(2)  //MUST FIX
             // ->has(InterestUser::factory(2))  //MUST FIX
             ->has(Goal::factory(1)
-                ->has(Task::factory(3)))
+                ->has(Task::factory(8)))
             
             ->create()->each(function ($user) use($interests) {
                 // Attaches two random Interests to each User

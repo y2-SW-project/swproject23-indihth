@@ -33,7 +33,7 @@
                             <x:form::toggle-switch name="active" />
                         </div>
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('admin.goals.index') }}" class="btn-secondary me-3">
+                            <x:form::button.link href="{{ route('user.goals.show', $goal->id)  }}" class="btn-secondary me-3">
                                 {{ __('Cancel') }}</x:form::button.link>
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>

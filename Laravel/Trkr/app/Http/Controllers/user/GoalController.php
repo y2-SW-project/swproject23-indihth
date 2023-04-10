@@ -6,6 +6,7 @@ use App\Models\Goal;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class GoalController extends Controller
@@ -90,6 +91,9 @@ class GoalController extends Controller
         $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
         $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
         $user = Auth::user();   // Not needed. test removing
+
+         // Put url into session data to redirect back after editing task
+         Session::put('url', request()->fullUrl());
 
         return view('user.goals.show', with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done]));
     }

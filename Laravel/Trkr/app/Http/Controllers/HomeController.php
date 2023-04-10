@@ -74,10 +74,13 @@ class HomeController extends Controller
         // Using first() because goal is a M:N to user but only 1 Goal was seeded per user
         // Should loop through goals on dashboard view to enable displaying multiple goals later on
         $toDo = Task::where('status', 0)->where('goal_id', $goal->first()->id)->get();
-        $done = Task::where('status', 1)->where('goal_id', $goal->first()->id)->get();
         
-        // Put Dashboard url into session data to redirect back after editing task
-        Session::put('dashboard', request()->fullUrl());
+        $done = Task::where('status', 1)
+        ->where('goal_id', $goal->first()->id)
+        ->latest('updated_at')
+        ->get();
+        // Put url into session data to redirect back after editing task
+        Session::put('url', request()->fullUrl());
 
         // Redirects to the admin index if admin
         if($user->hasRole('admin')){
@@ -87,6 +90,7 @@ class HomeController extends Controller
         else if ($user->hasRole('user')){
             $home = 'user.dashboard';
         }
+
         return view($home, with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done, "user" => $user]));
     }
 

@@ -37,7 +37,7 @@
                         </div>
                         <input type="hidden" name="goal_id" value="{{ $goal_id }}"/>
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ back() }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
+                            <x:form::button.link href="{{ route('user.goals.show', $goal_id) }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>
                         {{-- Hidden field to submit goal id to database --}}

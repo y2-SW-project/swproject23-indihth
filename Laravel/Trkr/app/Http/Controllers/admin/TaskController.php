@@ -35,11 +35,14 @@ class TaskController extends Controller
         // $task = Task::where('user_id', Auth::id())->get();
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
         $goal_id = $id;
-        // dd($id);
-
-        // $task = Task::find($goal);
-        // dd($task->goal);
-
+    
+        // If the user comes from Dashboard, session data will exist for it, so redirect there
+        if (session('dashboard')) {
+            $url = session('dashboard');        
+            $request->session()->forget('dashboard'); 
+            return redirect($url);
+        }
+        
         return view('admin.tasks.create')->with('type', $type)->with('goal_id', $goal_id);
     }
 
@@ -66,6 +69,13 @@ class TaskController extends Controller
             'title' => $request->title,
             'description' => $request->description
         ]);
+
+        // If the user comes from Dashboard, session data will exist for it, so redirect there
+        if (session('dashboard')) {
+            $url = session('dashboard');        
+            $request->session()->forget('dashboard'); 
+            return redirect($url);
+        }
 
         return to_route('admin.goals.show', $request->goal_id)->with('toast_success', 'Task Created Successfully!');
         
