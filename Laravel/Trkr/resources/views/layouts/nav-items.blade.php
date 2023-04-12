@@ -1,4 +1,4 @@
-<ul class="navbar-nav me-auto">
+<ul class="navbar-nav me-auto flex-column">
     {{-- <li class="nav-item">
         <a class="nav-link" :href="route('goals.index')"
             :active="request() - > routeIs('goals.index')">{{ __('Goals') }}</a>
