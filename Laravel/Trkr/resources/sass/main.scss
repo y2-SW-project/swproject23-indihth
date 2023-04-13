@@ -1,0 +1,37 @@
+// import functions
+@import "../../node_modules/bootstrap/scss/functions";
+
+// Negative margins enabled
+$enable-negative-margins: true;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Custom colours
+$primary: #D6EFFB;
+$secondary: #ffffff;
+
+// Body background
+$body-bg: #F9F9F9;
+// $body-bg: #ffffff;
+
+// Navbar Styling
+$nav-link-padding-y: .8rem;
+// $nav-link-padding-x: .5em;
+
+$nav-pills-border-radius: 60px;
+
+
+// import variables and mixins
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/utilities";
+@import "../../node_modules/bootstrap/scss/card";
+@import "../../node_modules/bootstrap/scss/navbar";
+
+// Navbar text colour 
+$nav-pills-link-active-color: $body-color;
+$nav-link-color: $dark;

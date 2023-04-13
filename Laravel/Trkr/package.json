@@ -11,12 +11,13 @@
         "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
-        "sass": "^1.56.1",
+        "sass": "^1.62.0",
         "vite": "^4.0.0"
     },
     "dependencies": {
         "@sweetalert2/theme-bootstrap-4": "^5.0.15",
         "@sweetalert2/themes": "^5.0.15",
+        "bootstrap-icons": "^1.10.4",
         "sweetalert": "^2.1.2",
         "sweetalert2": "^11.4.8"
     }

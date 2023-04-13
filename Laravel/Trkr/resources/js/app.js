@@ -1,5 +1,6 @@
 import './bootstrap';
 
+import '../sass/app.scss'
 
 import swal from 'sweetalert';
 
