@@ -1,0 +1,14 @@
+/* Fixing height on welcome card on dashboard */
+.welcomeCard {
+    max-height: 10rem;
+}
+
+/* Image on dashboard welcome card */
+.welcomeImage {
+    max-height: 5rem;
+}
+
+/* User image on dashboard profile */
+.userImage {
+    max-width: 9rem;
+}

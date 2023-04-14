@@ -2,12 +2,10 @@
 <div class="col-auto col-md-3 col-xl-2 px-md-2 px-0 ">
 
 {{-- Responsive side nav bar, text hides at medium breakpoint --}}
-    <nav class="d-flex flex-column align-items-center align-items-md-start px-3 pt-2 min-vh-100">
-        {{-- <nav class="d-flex flex-column flex-shrink-0 navbar-dark bg-secondary rounded-5 "> --}}
-        {{-- <hr> --}}
+    <nav class="d-flex flex-column sticky-top align-items-center align-items-md-start px-3 min-vh-100">
         <a href="{{ route('home.dashboard') }}"
-            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-decoration-none">
-            <span class="fs-5 d-none d-md-inline">Sidebar</span>
+            class="d-flex align-items-center pb-3 pt-2 mb-md-0 me-md-auto text-decoration-none text-dark">
+            <span class="fs-2 d-none d-md-inline">Sidebar</span>
         </a>
         <ul class="nav nav-pills flex-column mb-md-auto mb-0 align-items-center align-items-md-start fw-bolder">
             <li class="nav-item {{ Request::is('user.dashboard') ? 'active' : '' }}">
@@ -28,8 +26,8 @@
             </li>
             @if (auth()->check())
                 @if (!auth()->user()->isAdministrator())
-                    <li class="dropdown-item">
-                        <a href="{{ route('home.dashboard') }}" class="nav-link  px-0 align-middle"
+                    <li class="nav-item">
+                        <a href="{{ route('home.profile') }}" class="nav-link  px-0 align-middle"
                             aria-current="page">
                             <i class="bi bi-people-fill"></i> <span
                                 class="ms-1 d-none d-md-inline">{{ __('Profile') }}</span>
@@ -43,7 +41,7 @@
 
         {{-- Login / Register --}}
         @guest
-            <ul class="nav nav-pills flex-column mb-auto">
+            <ul class="nav nav-pills flex-column">
                 @if (Route::has('login'))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -59,7 +57,7 @@
             </ul>
 
             {{-- User logout --}}
-            <div class="dropdown pb-3 ps-3">
+            <div class="dropdown pb-3">
                 <a href="#"
                     class="d-flex align-items-center text-dark link-body-emphasis text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">

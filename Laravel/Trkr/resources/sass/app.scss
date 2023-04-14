@@ -1,10 +1,13 @@
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
-// Import bootstrap
+// Import css reset
 @import "../css/app.css";
 
-// Import bootstrap
+// Import custom css
+@import "../css/main.css";
+
+// Import custom scss
 @import "main.scss";
 
 // Bootstrap

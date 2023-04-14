@@ -28,10 +28,10 @@
 
 <body>
     <div id="app">
-        <main class="container-fluid py-4">
+        <main class="container-fluid">
             <div class="row flex-nowrap">
                     @include('layouts.nav-items')
-                <div class="col-10">
+                <div class="col-10 py-3 pe-5">
                     @yield('content')
                 </div>
             </div>
