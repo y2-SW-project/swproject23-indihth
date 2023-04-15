@@ -67,18 +67,18 @@ class TaskController extends Controller
             'description' => $request->description
         ]);
 
-       // If the user comes from Dashboard, session data will exist for it, so redirect there
-       if (session('url')) {
-        // Stores the session data url in variable
-        $url = session('url');        
+        // If the user comes from Dashboard, session data will exist for it, so redirect there
+        if (session('url')) {
+            // Stores the session data url in variable
+            $url = session('url');
 
-        // Removes the data from session
-        // Without, controller will redirect to url from goals view too
-        $request->session()->forget('url'); 
+            // Removes the data from session
+            // Without, controller will redirect to url from goals view too
+            $request->session()->forget('url');
 
-        // Redirect using session data stored in variable
-        return redirect($url);
-    }
+            // Redirect using session data stored in variable
+            return redirect($url);
+        }
 
         return to_route('user.goals.show', $request->goal_id);
     }
@@ -139,10 +139,10 @@ class TaskController extends Controller
 
         // If the user comes from Dashboard, session data will exist for it, so redirect there
         if (session('url')) {
-            $url = session('url');        
-            $request->session()->forget('url'); 
+            $url = session('url');
+            $request->session()->forget('url');
             return redirect($url);
-        }   // Could be improved
+        } 
 
         return to_route('user.goals.show', $task->goal);
         // return to_route('user.goals.show', $task->goal);
@@ -160,6 +160,13 @@ class TaskController extends Controller
         $user->authorizeRoles('user');
 
         $task->delete();
+
+        // If the user comes from Dashboard, session data will exist for it, so redirect there
+        if (session('url')) {
+            $url = session('url');
+            request()->session()->forget('url');
+            return redirect($url);
+        }
 
         return to_route('user.goals.show', $task->goal_id);
     }

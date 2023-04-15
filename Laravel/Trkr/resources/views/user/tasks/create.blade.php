@@ -6,10 +6,6 @@
             <div class="col-md-8">
                 <div class="h2">Add a New Task</div>
                 <div class="card py-3 px-4">
-                    <div>
-                        Goal id: {{ $goal_id}}
-                        {{-- Goal id: {{ $task}} --}}
-                    </div>
                     {{-- possible to use :bind="goals" to auto popular labels, error --}}
                     <x:form::form class="row" method="post" :action="route('user.tasks.store')">
                         <div class="col-md-6">
@@ -37,7 +33,8 @@
                         </div>
                         <input type="hidden" name="goal_id" value="{{ $goal_id }}"/>
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('user.goals.show', $goal_id) }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
+                            <x:form::button.link href="{{ url()->previous() }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link >
+                            {{-- <x:form::button.link href="{{ route('user.goals.show', $goal_id) }}" class="btn-secondary me-3">{{ __('Cancel') }}</x:form::button.link > --}}
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>
                         {{-- Hidden field to submit goal id to database --}}

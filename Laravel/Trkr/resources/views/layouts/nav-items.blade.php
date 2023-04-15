@@ -24,17 +24,7 @@
                     <i class="bi bi-people-fill"></i> <span class="ms-1 d-none d-md-inline">{{ __('Users') }}</span>
                 </a>
             </li>
-            @if (auth()->check())
-                @if (!auth()->user()->isAdministrator())
-                    <li class="nav-item">
-                        <a href="{{ route('home.profile') }}" class="nav-link  px-0 align-middle"
-                            aria-current="page">
-                            <i class="bi bi-people-fill"></i> <span
-                                class="ms-1 d-none d-md-inline">{{ __('Profile') }}</span>
-                        </a>
-                    </li>
-                @endif
-            @endif
+            
         </ul>
 
         <hr />
@@ -77,6 +67,16 @@
                             @csrf
                         </form>
                     </li>
+                    @if (auth()->check())
+                    @if (!auth()->user()->isAdministrator())
+                        <li class="nav-item">
+                            <a href="{{ route('home.profile') }}" class="dropdown-item"
+                                aria-current="page">
+                                {{ __('Profile') }}
+                            </a>
+                        </li>
+                    @endif
+                @endif
                 </ul>
             </div>
         @endguest

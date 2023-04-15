@@ -37,7 +37,7 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Hours for past 3 months</h6>
                                 <div class="col">
                                     <img src="{{ asset('storage/images/chart.png') }}" alt="User tracking chart"
-                                        class="img-fluid border border-4 border-white rounded rounded-5">
+                                        class="height-50 border border-4 border-white rounded rounded-5">
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,12 @@
                                 <input type="hidden" name="goal_id" value="{{ $goal->id }}" />
                             </form>
                         @endforeach --}}
-                        <h3 class="h3">Tasks:</h3>
+                        <div class="d-flex mb-3 align-items-center">
+                            <h3 class="h3 mb-0 pe-2">Tasks</h3>
+                            <a href="{{ route('user.tasks.create',  ['id' => $goal->id]) }}" class="mt-1 me-3 d-flex align-items-center">
+                                <i class="fs-4 text-info bi bi-plus-circle"></i>
+                            </a>
+                        </div>
                         @foreach ($toDo as $task)
                             <div class="card mb-3">
                                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -106,13 +111,6 @@
                                         {{-- Task Edit Button --}}
                                         <a href="{{ route('user.tasks.edit', $task) }}" class="me-2"><i
                                                 class="fs-4 text-muted bi bi-pencil-fill"></i></a>
-
-                                        {{-- Task Delete Button --}}
-                                        {{-- <x:form::form action="{{ route('user.tasks.destroy', $task) }}" method="delete">
-                                            <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete
-                                                Task
-                                            </x:form::button.submit>
-                                        </x:form::form> --}}
                                     </div>
                                 </div>
                             </div>

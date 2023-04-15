@@ -35,13 +35,6 @@ class TaskController extends Controller
         // $task = Task::where('user_id', Auth::id())->get();
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
         $goal_id = $id;
-    
-        // If the user comes from Dashboard, session data will exist for it, so redirect there
-        if (session('dashboard')) {
-            $url = session('dashboard');        
-            $request->session()->forget('dashboard'); 
-            return redirect($url);
-        }
         
         return view('admin.tasks.create')->with('type', $type)->with('goal_id', $goal_id);
     }
@@ -150,6 +143,13 @@ class TaskController extends Controller
 
         $task->delete();
 
+         // If the user comes from Dashboard, session data will exist for it, so redirect there
+         if (session('url')) {
+            $url = session('url');
+            request()->session()->forget('url');
+            return redirect($url);
+        }
+        
         return to_route('admin.goals.show', $task->goal_id)->with('toast_success', 'Task Deleted Successfully!');
     }
 }

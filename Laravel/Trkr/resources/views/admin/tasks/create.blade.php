@@ -6,10 +6,6 @@
             <div class="col-md-8">
                 <div class="h2">Add a New Task</div>
                 <div class="card py-3 px-4">
-                    <div>
-                        Goal id: {{ $goal_id}}
-                        {{-- Goal id: {{ $task}} --}}
-                    </div>
                     {{-- possible to use :bind="goals" to auto popular labels, error --}}
                     <x:form::form class="row" method="post" :action="route('admin.tasks.store')">
                         <div class="col-md-6">

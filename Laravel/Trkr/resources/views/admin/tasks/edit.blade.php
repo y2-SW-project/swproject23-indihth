@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('admin.goals.show', $task->goal) }}" class="btn-secondary me-3">
+                            <x:form::button.link href="{{ url()->previous() }}" class="btn-secondary me-3">
                                 {{ __('Cancel') }}</x:form::button.link>
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>

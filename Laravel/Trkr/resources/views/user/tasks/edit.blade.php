@@ -6,9 +6,9 @@
             <div class="col-md-8">
                 <div class="h2">Edit Goal</div>
                 <div class="card py-3 px-4">
-
                     {{-- You won't need to define a @method() directive, declare your PUT, PATCH or DELETE action directly in the action attribute --}}
-                    <x:form::form :bind="$task" class="row" method="put" :action="route('user.tasks.update', $task)">
+                    <x:form::form :bind="$task" class="row" method="put"
+                        :action="route('user.tasks.update', $task)">
                         <div class="col-md-6">
                             <x:form::input name="title" label="Title" :value="@old('title', $task->title)" />
                             {{-- <x:form::input type="email" name="email" /> --}}
@@ -28,9 +28,9 @@
                             <br />
                             <div class="form-check">
                                 {{-- <input name="status" class="form-check-input" type="checkbox" value="1" @checked($task->status || old('status', 0) === 1) id="flexCheckDefault"> --}}
-                                    <input name="status" class="form-check-input" type="checkbox" value="1" @checked(old('status', $task->status ))>
-                                    {{-- <input name="status" class="form-check-input" type="checkbox" value="1" @checked($task->status || old('status', 0) === 1) id="flexCheckDefault"> --}}
-
+                                <input name="status" class="form-check-input" type="checkbox" value="1"
+                                    @checked(old('status', $task->status))>
+                                {{-- <input name="status" class="form-check-input" type="checkbox" value="1" @checked($task->status || old('status', 0) === 1) id="flexCheckDefault"> --}}
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Task Done
                                 </label>
@@ -39,12 +39,24 @@
 
                         </div>
 
-                        <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('user.goals.show', $task->goal) }}" class="btn-secondary me-3">
-                                {{ __('Cancel') }}</x:form::button.link>
-                            <x:form::button.submit>Save </x:form::button.submit>
+                        <div class="col-12 mt-2 d-flex justify-content-between">
+                            
+                            <div>
+                                <x:form::button.link href="{{ route('user.goals.show', $task->goal) }}"
+                                    class="btn-secondary me-3">
+                                    {{ __('Cancel') }}</x:form::button.link>
+                                <x:form::button.submit>Save </x:form::button.submit>
+                            </div>
+                            </x:form:form>
+                            
+                            {{-- Task Delete Button --}}
+                            <x:form::form action="{{ route('user.tasks.destroy', $task) }}" method="delete" class="mt-auto">
+                                <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete
+                                    Task
+                                </x:form::button.submit>
+                            </x:form::form>
+
                         </div>
-                        </x:form:form>
                 </div>
             </div>
         </div>
