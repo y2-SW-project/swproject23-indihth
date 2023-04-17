@@ -96,7 +96,7 @@
                         <div class="d-flex mb-3 align-items-center">
                             <h3 class="h3 mb-0 pe-2">Tasks</h3>
                             <a href="{{ route('user.tasks.create',  ['id' => $goal->id]) }}" class="mt-1 me-3 d-flex align-items-center">
-                                <i class="fs-4 text-info bi bi-plus-circle"></i>
+                                <i class="fs-4 text-dark bi bi-plus-circle"></i>
                             </a>
                         </div>
                         @foreach ($toDo as $task)

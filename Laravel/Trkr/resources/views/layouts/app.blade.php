@@ -17,8 +17,8 @@
 
     {{-- Sweetalert2: Popup alerts on delte. Script and style sheet --}}
     <script src="
-                    https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
-                    "></script>
+                                https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
+                                "></script>
 
 
     <script src="sweetalert2.all.min.js"></script>
@@ -28,14 +28,24 @@
 
 <body>
     <div id="app">
-        <main class="container-fluid">
-            <div class="row flex-nowrap">
-                    @include('layouts.nav-items')
-                <div class="col-9 py-3 pe-5">
-                    @yield('content')
-                </div>
-            </div>
-        </main>
+        {{-- Not logged in, no nav --}}
+        @if (Auth::guest())
+            <main class="container-fluid">
+                <div class="row m-0 flex-nowrap">
+                    <div class="col-12 p-0">
+                        @yield('content')
+                    </div>
+                @else
+                    <main class="container-fluid">
+                        <div class="row flex-nowrap">
+                            {{-- If user is logged in, dislay navbar --}}
+                            @include('layouts.nav-items')
+                            <div class="col-9 py-3 pe-5">
+                                @yield('content')
+                            </div>
+        @endif
+    </div>
+    </main>
     </div>
 </body>
 

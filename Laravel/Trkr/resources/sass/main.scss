@@ -9,9 +9,13 @@ $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
+
+$orange: #E0896E;
+
 // Custom colours
 $primary: #D6EFFB;
 $secondary: #ffffff;
+
 
 // Body background
 $body-bg: #F9F9F9;
@@ -23,14 +27,26 @@ $nav-link-padding-y: .8rem;
 
 $nav-pills-border-radius: 60px;
 
-
 // import variables and mixins
 @import "../../node_modules/bootstrap/scss/variables";
+
+//Font size
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: .8rem
+);
+
 @import "../../node_modules/bootstrap/scss/maps";
 @import "../../node_modules/bootstrap/scss/mixins";
 @import "../../node_modules/bootstrap/scss/utilities";
 @import "../../node_modules/bootstrap/scss/card";
 @import "../../node_modules/bootstrap/scss/navbar";
+
+
 
 // Navbar text colour 
 $nav-pills-link-active-color: $body-color;
