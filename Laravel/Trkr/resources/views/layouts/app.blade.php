@@ -31,7 +31,7 @@
         <main class="container-fluid">
             <div class="row flex-nowrap">
                     @include('layouts.nav-items')
-                <div class="col-10 py-3 pe-5">
+                <div class="col-9 py-3 pe-5">
                     @yield('content')
                 </div>
             </div>
