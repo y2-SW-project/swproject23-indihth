@@ -2,16 +2,21 @@
 
 @section('content')
     <div class="row justify-content-center vh-100">
-        <div class="col-6 bg-primary">
-            <h2>welcome</h2>
+        <div class="col-6 bg-primary d-flex">
+            <div class="my-auto pb-4 text-center">
+                <img src="{{ asset('storage/images/people-collab.png') }}" alt="Tracker logo" class="">
+                <h2 class="h4 fw-semibold">Network With Users <br/> Around The World</h2>
+                <p>Share in your partners successes and <br/> help keep each other on track</p>
+            </div>
         </div>
         <div class="col-6 bg-white d-flex flex-column align-items-center">
             <div class="row h-100">
                 <div class="col my-auto pb-5">
                     <div class="d-flex flex-column align-items-center">
-                        <img src="{{ asset('storage/images/trackerSingleLogo.png') }}" alt="Tracker logo" class="welcomeImage mb-3">
-                        <h1 class="h1">Welcome Again!</h1>
-                        <p class="mb-5 text-center">Login and keep track of all of your  <br> current goals and tasks</p>
+                        <img src="{{ asset('storage/images/trackerSingleLogo.png') }}" alt="Tracker logo"
+                            class="welcomeImage mb-3">
+                        <h1 class="h1">Hello Again!</h1>
+                        <p class="mb-5 text-center">Login and keep track of all of your <br> current goals and tasks</p>
 
                         {{-- Start of form --}}
                         <div class="card-body">

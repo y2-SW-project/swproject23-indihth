@@ -5,7 +5,7 @@
         <div class="row">
             @foreach ($users as $user)
                 <div class="col-4">
-                    <div class="card my-3 mx-3 pb-3 ">
+                    <div class="card shadow-sm my-3 mx-3 pb-3 ">
                     {{-- <div class="card my-3 mx-auto pb-3" style="width: 18rem;"> --}}
                         <div class="card-body">
                             <a href="{{ route('user.users.show', $user->id) }}" class="link-dark">
@@ -14,7 +14,7 @@
                                     <div>
                                         {{-- User Image --}}
                                         <img src="{{ asset('storage/images/' . $user->user_image) }}" width="80"
-                                        class="rounded-circle mb-3" alt="user profile image">
+                                        class="rounded-circle shadow-4 mb-3" alt="user profile image">
                                         <h3 class="h2 mb-0">
                                             {{ $user->name }}
                                         </h3>

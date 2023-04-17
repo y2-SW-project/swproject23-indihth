@@ -3,6 +3,7 @@
 
 // Negative margins enabled
 $enable-negative-margins: true;
+$enable-shadows: true;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -57,3 +58,4 @@ $nav-link-color: $dark;
 $card-border-width: 0;
 $card-spacer-y:  1.2rem;
 $card-spacer-x: 1.5rem;
+// $card-box-shadow: .5rem;
