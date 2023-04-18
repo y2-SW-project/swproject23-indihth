@@ -12,3 +12,9 @@
 .userImage {
     max-width: 9rem;
 }
+
+.form-input img {
+    width:100%;
+    display:none;
+    margin-bottom:30px;
+  }

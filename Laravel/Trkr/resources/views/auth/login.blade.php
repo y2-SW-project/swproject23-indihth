@@ -45,7 +45,7 @@
                                     <label for="floatingPassword">Password</label>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="form-check btn ms-3">
+                                    <div class="form-check btn shadow-none ms-3">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                             {{ old('remember') ? 'checked' : '' }}>
                                         <label class="form-check-label fs-6" for="remember">

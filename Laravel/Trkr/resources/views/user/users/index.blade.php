@@ -3,9 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="ps-3 mb-4">
+                <h1 class="h5 mb-0"><strong>Partners</strong></h1>
+                {{-- Display current date --}}
+                <p class="h7">{{ now()->toFormattedDayDateString() }}</p>
+            </div>
             @foreach ($users as $user)
                 <div class="col-4">
-                    <div class="card shadow-sm my-3 mx-3 pb-3 ">
+                    <div class="card shadow-sm my-3 me-3 pb-3">
                     {{-- <div class="card my-3 mx-auto pb-3" style="width: 18rem;"> --}}
                         <div class="card-body">
                             <a href="{{ route('user.users.show', $user->id) }}" class="link-dark">
