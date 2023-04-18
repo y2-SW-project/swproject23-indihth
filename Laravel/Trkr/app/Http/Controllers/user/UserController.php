@@ -105,8 +105,9 @@ class UserController extends Controller
         $languages = ['German', 'Spanish', 'French', 'Italian'];
         $countries = Country::all();
         $interests = Interest::all();
+        $goal = $user->goals->first();
 
-        return view('user.users.edit')->with(compact('user', 'languages', 'countries', 'interests'));
+        return view('user.users.edit')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
     }
 
     /**
@@ -126,6 +127,8 @@ class UserController extends Controller
             //403 error forbidden
             return abort(403);
         }
+
+        // dd($request->interest_id);
 
         // TODO: Add validation on 'language' to confirm it's a valid option
         $request->validate([
@@ -162,6 +165,9 @@ class UserController extends Controller
                 'language' => $request->language
             ]);
         }
+
+        // Update interests - removes none selected and adds selected
+        $user->interests()->sync($request->interest_id);
 
         $toast_success = 'User Updated Successfully!';
 
