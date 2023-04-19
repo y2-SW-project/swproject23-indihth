@@ -125,6 +125,8 @@ class TaskController extends Controller
         // dd($request->boolean('status'));
         $user = Auth::user();
 
+        dd($task);
+
         $request->validate([
             'title' => 'required|max:50',
             'description' => 'required'
@@ -148,12 +150,42 @@ class TaskController extends Controller
         // return to_route('user.goals.show', $task->goal);
     }
 
+    // public function updateStatus(Request $request, Task $task)
+    // {
+    //     $user = Auth::user();
+    //     $user->authorizeRoles('user');
+
+    //     $user = Auth::user();
+
+    //     dd($task);
+
+    //     $update = $task->update([
+    //         'status' => $request->boolean('status')
+    //     ]);
+
+    //     if ($update) {
+    //         dd("updated");
+    //     }
+
+    //     // If the user comes from Dashboard, session data will exist for it, so redirect there
+    //     if (session('url')) {
+    //         $url = session('url');
+    //         $request->session()->forget('url');
+    //         return redirect($url);
+    //     } 
+
+    //     return to_route('user.goals.show', $task->goal);
+    //     // return to_route('user.goals.show', $task->goal);
+    // }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy(Task $task)
     {
         $user = Auth::user();

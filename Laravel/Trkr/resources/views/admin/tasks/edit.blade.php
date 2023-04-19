@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="h2">Edit Goal</div>
+                <div class="h2">Edit Task</div>
                 <div class="card py-3 px-4">
 
                     {{-- You won't need to define a @method() directive, declare your PUT, PATCH or DELETE action directly in the action attribute --}}
