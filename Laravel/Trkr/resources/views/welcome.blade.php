@@ -1,7 +1,7 @@
 @extends('layouts.app')
 {{-- @include('layouts.nav-items') --}}
 @section('content')
-    <img src="{{ asset('storage/images/trackerHeaderLogo.png') }}" class="img-fluid" 
+    <img src="{{ asset('storage/images/assets/trackerHeaderLogo.png') }}" class="img-fluid" 
         alt="Tracker logo">
     <div class="d-flex">
         @if (Route::has('login'))

@@ -29,6 +29,7 @@ class GoalController extends Controller
             ->with('user')
             ->paginate(5);
 
+        
         // Alert::success('Success Title', 'Success Message');
 
         // Returns the goals index view and passes the goals variable with the logged in users' goals
@@ -94,7 +95,11 @@ class GoalController extends Controller
         $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
         $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
 
-        return view('admin.goals.show', with(["goal" => $goal, "toDo" => $toDo, "done" => $done]));
+        // User relationship between goal and user to work backwards
+        $user = $goal->user;
+        // dd($user);
+
+        return view('admin.goals.show', with(["goal" => $goal, "toDo" => $toDo, "done" => $done, "user" => $user]));
     }
 
     /**

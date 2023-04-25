@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150"
+                                    <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
                                         alt="user profile image">
 
                                     <div>

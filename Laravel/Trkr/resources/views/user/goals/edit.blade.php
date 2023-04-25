@@ -24,13 +24,6 @@
                                     </option>
                                 @endforeach
                             </select>
-
-                            <br/>
-                            {{-- <x:form::select name="language" :options="$languages" label="Select Language" /> --}}
-                            <x:form::checkbox name="technologies"
-                                :group="[1 => 'Laravel', 2 => 'Bootstrap', 3 => 'Tailwind', 4 => 'Livewire']" inline />
-                            <x:form::radio name="gender" :group="[1 => 'Male', 2 => 'Female', 3 => 'Other']" inline />
-                            <x:form::toggle-switch name="active" />
                         </div>
                         <div class="col-12 mt-2">
                             <x:form::button.link href="{{ route('user.goals.show', $goal->id)  }}" class="btn-secondary me-3">

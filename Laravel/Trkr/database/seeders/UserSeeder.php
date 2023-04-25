@@ -31,6 +31,7 @@ class UserSeeder extends Seeder
         $admin->name = 'Glenn Sturgis';
         $admin->email = 'glenn@cloud9.ie';
         $admin->password = Hash::make('password');     // Hash creates an encrypted password that's accepted by breeze from the db
+        $admin->user_image = "glenn2.avif";
         $admin->save();    // save() inserts the new record to the db
         $admin->roles()->attach($role_admin);  // attaches the admin role to the new user
 

@@ -36,7 +36,7 @@ class UserFactory extends Factory
             'about_me' => $this->faker->realText(),
             'country_id' => $this->faker->numberBetween(1, 6),
              // The file path can be returned by ommiting the 'false' as the 3rd parameter
-            'user_image' => $this->faker->file($sourceDir = 'public/images/users/', $targetDir = 'public/storage/images/', false),
+            'user_image' => $this->faker->file($sourceDir = 'public/images/users/', $targetDir = 'public/storage/images/users/', false),
             'level' => $this->faker->randomElement(['Beginner', 'Intermediate', 'Advanced']),
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // password

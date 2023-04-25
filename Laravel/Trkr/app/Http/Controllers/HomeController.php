@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\user\GoalController as UserGoalController;
+
 use App\Models\Goal;
 use App\Models\Task;
 use App\Models\User;
@@ -40,9 +42,22 @@ class HomeController extends Controller
         if ($user->hasRole('admin')) {
             $home = 'admin.goals.index';
         }
+
+        // FUTURE FEATURE
+        // Premium user will get index of view
+        // Basic user sent to their only goal
+
         // Redirects to the user index if user
         else if ($user->hasRole('user')) {
-            $home = 'user.goals.index';
+
+            // Get goal id from authorised user
+            $goal = Auth::user()->goals->first()->id;
+
+            // Redirects to the user goal controller show method
+            return redirect()->action(
+                [UserGoalController::class, 'show'],
+                ['goal' => $goal]
+            );
         }
         return redirect()->route($home);
     }

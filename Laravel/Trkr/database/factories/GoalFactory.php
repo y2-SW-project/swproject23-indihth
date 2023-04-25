@@ -20,7 +20,7 @@ class GoalFactory extends Factory
             'title' => $this->faker->numerify('Goal ###'),
             'description' => $this->faker->sentences(3, true),
             'language' => $this->faker->randomElement(['German', 'Spanish', 'French', 'Italian']),
-            'goal_image' => $this->faker->file($sourceDir = 'public/images/goals/', $targetDir = 'public/storage/images/', false),
+            'goal_image' => $this->faker->file($sourceDir = 'public/images/goals/', $targetDir = 'public/storage/images/goals', false),
         ];
     }
 }

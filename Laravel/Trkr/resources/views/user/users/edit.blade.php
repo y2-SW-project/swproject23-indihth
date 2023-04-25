@@ -25,7 +25,7 @@
                         <div class="d-flex mb-4 ">
                             <div>
                                 {{-- User Image --}}
-                                <img src="{{ asset('storage/images/' . $user->user_image) }}" width="120"
+                                <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="120"
                                     alt="user profile image" class="rounded-circle shadow-4">
                             </div>
                             {{-- Profile Image Upload, how to display preview? --}}

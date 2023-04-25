@@ -17,7 +17,7 @@
                                         alt="user profile image">
                                 </h5>
                             </a>
-                            <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150"
+                            <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
                                 alt="user profile image">
                             {{-- Must loop through goals as the relationship is 1:M, even though only 1 goal per user exists --}}
                             @foreach ($user->goals as $goal)

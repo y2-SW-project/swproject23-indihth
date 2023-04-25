@@ -26,7 +26,7 @@ class UserController extends Controller
         // $users = User::whereNot('name', 'Glenn Sturgis')
         $users = User::latest('updated_at')
             ->whereNot('id', 1)     // Don't include admin user, always id of 1
-            ->paginate(8);
+            ->paginate(9);
 
         // $users = $users->users;
         // dd($users);

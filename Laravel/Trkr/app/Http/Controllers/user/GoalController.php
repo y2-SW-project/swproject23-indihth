@@ -95,7 +95,7 @@ class GoalController extends Controller
          // Put url into session data to redirect back after editing task
          Session::put('url', request()->fullUrl());
 
-        return view('user.goals.show', with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done]));
+        return view('user.goals.show', with(["goal" =>$goal, "toDo" => $toDo, "done"=> $done, "user" => $user]));
     }
 
     /**

@@ -22,7 +22,7 @@
                                 <h5 class="card-title">Tracking History</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Hours for past 3 months</h6>
                                 <div class="col">
-                                    <img src="{{ asset('storage/images/chart.png') }}" alt="user profile image"
+                                    <img src="{{ asset('storage/images/assets/chart.png') }}" alt="user profile image"
                                         class="img-fluid border border-4 border-white rounded rounded-5">
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                             <div class="col d-flex align-items-center flex-column">
                                 <h2 class="h2">My Profile</h2>
                                 <div class="my-2">
-                                    <img src="{{ asset('storage/images/' . $user->user_image) }}" width="150"
+                                    <img src="{{ asset('storage/images/users/' . $user->user_image) }}" width="150"
                                         alt="user profile image">
                                 </div>
                                 <p class="h5"> {{ $user->name }} </p>

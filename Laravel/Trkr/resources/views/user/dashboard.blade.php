@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="ps-3 mb-4">
-                            <h1 class="h5 mb-0"><strong>Dashboard</strong></h1>
+                            <h1 class="h5 mb-0 fw-bolder">Dashboard</h1>
                             {{-- Display current date --}}
                             <p class="h7">{{ now()->toFormattedDayDateString() }}</p>
                         </div>
@@ -21,7 +21,7 @@
                                     <p class="w-75">Plan your days to be more productive, you have 3 daily tasks to
                                         complete today</p>
                                 </div>
-                                <img src="{{ asset('storage/images/bubbles.png') }}" alt="User tracking chart"
+                                <img src="{{ asset('storage/images/assets/bubbles.png') }}" alt="User tracking chart"
                                     class="img welcomeImage pe-4">
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                 <h5 class="card-title">Tracking History</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Hours for past 3 months</h6>
                                 <div class="col">
-                                    <img src="{{ asset('storage/images/chart.png') }}" alt="User tracking chart"
+                                    <img src="{{ asset('storage/images/assets/chart.png') }}" alt="User tracking chart"
                                         class="height-50 border border-4 border-white rounded rounded-5">
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                     </div>
                 </article>
 
-                {{-- Compelted Task Feed --}}
+                {{-- Partner Task Feed --}}
                 <article class="row">
                     <div class="col">
                         <div class="my-3">
@@ -73,7 +73,7 @@
                     <div class="col d-flex align-items-center flex-column">
                         <h1 class="h5 mb-0"><strong>Profile</strong></h1>
                         <div class="my-2">
-                            <img src="{{ asset('storage/images/' . $user->user_image) }}" class="userImage rounded-circle"
+                            <img src="{{ asset('storage/images/users/' . $user->user_image) }}" class="userImage rounded-circle"
                                 alt="user profile image">
                         </div>
                         <p class="h4 mb-0"> {{ Str::upper($user->name) }} </p>
@@ -86,13 +86,6 @@
                 {{-- Display Tasks Information --}}
                 <article class="row">
                     <div class="col mx-3">
-                        {{-- @foreach ($user->goals as $goal)
-                            <a href="{{ route('user.tasks.create', ['id' => $goal->id]) }}" class="btn btn-primary">+ Add
-                                New Task</a>
-                            <form action="post">
-                                <input type="hidden" name="goal_id" value="{{ $goal->id }}" />
-                            </form>
-                        @endforeach --}}
                         <div class="d-flex mb-3 align-items-center">
                             <h3 class="h3 mb-0 pe-2">Tasks</h3>
                             <a href="{{ route('user.tasks.create',  ['id' => $goal->id]) }}" class="mt-1 me-3 d-flex align-items-center">

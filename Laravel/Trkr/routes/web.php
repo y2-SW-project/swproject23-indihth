@@ -57,6 +57,7 @@ Route::resource('/user/users', UserUserController::class)->middleware(['auth'])-
 // Routes created seperately in order to pass the goal id through to the task create and edit views
 Route::get('/user/tasks/{id}/create', [UserTaskController::class, 'create'])->name('user.tasks.create');
 Route::get('/user/tasks/{id}/edit', [UserTaskController::class, 'edit'])->name('user.tasks.edit');
+Route::put('/user/tasks/{id}/updateStatus', [UserTaskController::class, 'updateStatus'])->name('user.tasks.updateStatus');
 
 // Replace partner
 Route::post('/user/users/removePartner',[UserUserController::class,'removePartner'])->name('user.users.removePartner');
