@@ -40,7 +40,7 @@
                         <div class="row flex-nowrap">
                             {{-- If user is logged in, dislay navbar --}}
                             @include('layouts.nav-items')
-                            <div class="col-9 py-3 pe-5">
+                            <div class="col-lg-9 py-3">
                                 @yield('content')
                             </div>
         @endif

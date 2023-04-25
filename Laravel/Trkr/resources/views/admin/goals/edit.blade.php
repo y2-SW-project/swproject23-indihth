@@ -25,10 +25,22 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-12 mt-2">
-                            <x:form::button.link href="{{ route('user.goals.show', $goal->id)  }}" class="btn-secondary me-3">
-                                {{ __('Cancel') }}</x:form::button.link>
-                            <x:form::button.submit>Save </x:form::button.submit>
+                        <div class="col-12 mt-2 d-flex justify-content-between">
+                            {{-- Delete Goal Button --}}
+                            <x:form::form action="{{ route('admin.goals.destroy', $goal) }}" method="delete">
+                                {{-- @method() and @csrf() not needed as form::form component automatically includes these --}}
+
+                                <x:form::button.submit class="btn btn-danger" onclick="deleteConfirm(event)">Delete Goal
+                                </x:form::button.submit>
+                            </x:form::form>
+
+                            {{-- Save and Cancel Buttons --}}
+                            <div>
+                                <x:form::button.link href="{{ route('admin.goals.show', $goal->id) }}"
+                                    class="btn-secondary me-3">
+                                    {{ __('Cancel') }}</x:form::button.link>
+                                <x:form::button.submit>Save </x:form::button.submit>
+                            </div>
                         </div>
                         </x:form:form>
                 </div>

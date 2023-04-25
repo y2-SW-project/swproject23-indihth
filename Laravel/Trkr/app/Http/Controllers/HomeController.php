@@ -112,6 +112,11 @@ class HomeController extends Controller
         $user = Auth::user();
         $home = 'home';
 
+        $goal = $user->goals->first();
+        $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
+
+        $partner = $user->partners->first();
+
         // Redirects to the admin index if admin
         if ($user->hasRole('admin')) {
             $home = 'admin.users.profile';
@@ -120,6 +125,8 @@ class HomeController extends Controller
         else if ($user->hasRole('user')) {
             $home = 'user.users.profile';
         }
-        return view($home)->with('user', $user);
+        // return view($home)->with('user', $user);
+        return view($home, with(["goal" =>$goal, "done"=> $done, "user" => $user, "partner" => $partner]));
+  
     }
 }

@@ -56,7 +56,7 @@
                                         <h6 class="card-subtitle mb-2 text-muted">
                                             {{ $task->type }}
                                         </h6>
-                                        <p>{{ $task->updated_at->diffForHumans() }}</p>
+                                        <p class="mb-0">{{ $task->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
                             @endforeach
