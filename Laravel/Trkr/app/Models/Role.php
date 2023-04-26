@@ -14,6 +14,8 @@ class Role extends Model
         return $this->belongsToMany('App\Models\User', 'user_role');
     }
 
+
+
     // Returns query with roles excluding one
     // public function scopeExclude($query, $role)
     // {

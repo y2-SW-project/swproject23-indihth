@@ -93,28 +93,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- Personal Information --}}
-                                <div class="col">
-                                    <div class="row mb-3">
-                                        <label for="country"
-                                            class="col-md-3 col-form-label text-md-end">{{ __('Country') }}</label>
-                                        <div class="col-md-7">
-                                            <input id="country" type="text" class="form-control" name="country"
-                                                field="country" required>
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="about_me"
-                                            class="col-md-3 col-form-label text-md-end">{{ __('About Me') }}</label>
-                                        <div class="col-md-7">
-                                            <textarea id="about_me" type="textarea" class="form-control" name="about_me"
-                                                field="about_me" required>
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </form>
                     </div>

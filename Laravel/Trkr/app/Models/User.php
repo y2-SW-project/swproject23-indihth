@@ -113,6 +113,8 @@ class User extends Authenticatable
         'user_image'
     ];
 
+    protected $table = 'users';
+
     /**
      * The attributes that should be hidden for serialization.
      *

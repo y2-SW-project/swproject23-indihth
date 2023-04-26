@@ -30,7 +30,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/user/goals/create';
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -69,7 +70,7 @@ class RegisterController extends Controller
         $user_image = request()->file('user_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
         $extension = $user_image->getClientOriginalExtension();     // Gets file extension
         $filename = date('Y-m-d-His') . '_' . request()->input('name') . '_' . $extension;  // Creates unique filename
-        $path = $user_image->storeAs('public/images', $filename);   // Stores the image in the public images under new filename
+        $path = $user_image->storeAs('public/images/users', $filename);   // Stores the image in the public images under new filename
 
 
         // Replace 'return' with user variable
