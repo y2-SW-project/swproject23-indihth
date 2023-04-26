@@ -12,7 +12,7 @@
                                 <div class="position-absolute top-0 start-0">
                                     {{-- Edit Goal Button --}}
                                     <a href="{{ route('user.users.edit', $user) }}" class="fs-3 me-2">
-                                        <i class="bi bi-pencil"></i>
+                                        <i class="bi bi-pencil text-dark"></i>
                                     </a>
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
@@ -99,7 +99,8 @@
                                     class="card-img-top welcomeCard goalImage">
                             </div>
                             <div class="card-body">
-                                <h5 class="h3 text-center mb-3">{{ $goal->title }}</h5>
+                                <h5 class="h3 text-center">{{ $goal->title }}</h5>
+                                <p class="h5 text-center mb-3">{{ $goal->language }}</p>
                                 <div class="mb-3">
                                     <h3 class="h5">Goal Description</h3>
                                     <p class="">{{ $goal->description }}</p>
@@ -126,7 +127,7 @@
                                         <div class="d-flex align-items-center justify-content-end mt-n3">
                                             {{-- Task Edit Button --}}
                                             <a href="{{ route('user.tasks.edit', $task) }}" class="fs-4 me-2"><i
-                                                    class="bi bi-pencil"></i>
+                                                    class="bi bi-pencil text-dark"></i>
                                             </a>
                                             {{-- Task Delete Button --}}
                                             {{-- <x:form::form action="{{ route('user.tasks.destroy', $task) }}" method="delete">
