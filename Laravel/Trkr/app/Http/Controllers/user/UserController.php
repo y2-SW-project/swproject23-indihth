@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\Interest;
 use App\Models\Role;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class UserController extends Controller
         // $users = User::whereNot('name', 'Glenn Sturgis')
         $users = User::latest('updated_at')
             ->whereNot('id', 1)     // Don't include admin user, always id of 1
+            ->whereNot('id', $user->id)     // Don't include admin user, always id of 1
             ->paginate(9);
 
         // $users = $users->users;
@@ -39,7 +41,7 @@ class UserController extends Controller
 
     public static function removePartner(User $user)
     {
-        $userAuth = Auth::user(); 
+        $userAuth = Auth::user();
         $userAuth->authorizeRoles('user');
 
         if ($userAuth->removePartner($user)) {
@@ -53,7 +55,7 @@ class UserController extends Controller
 
     public static function addPartner(User $user)
     {
-        $userAuth = Auth::user(); 
+        $userAuth = Auth::user();
         $userAuth->authorizeRoles('user');
 
         if ($userAuth->addPartner($user)) {
@@ -61,7 +63,7 @@ class UserController extends Controller
             dd("success add partner");
         };
 
-        $toast_error = 'Partner Updated Failed!';
+        $toast_error = 'Partner Update Failed!';
         return view('user.users.show', $user)->with(compact('toast_error', 'user'));
     }
 
@@ -77,10 +79,30 @@ class UserController extends Controller
         $userAuth = Auth::user();
         $userAuth->authorizeRoles('user');
 
+        // verify they are logged in
+        // $user = Auth::user();
+        $home = 'home';
+
+        $goal = $user->goals->first();
+        $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
+
+        $partner = $user->partners->first();
+
+        // Redirects to the admin index if admin
+        if ($user->hasRole('admin')) {
+            $home = 'admin.users.show';
+        }
+        // Redirects to the user index if user
+        else if ($user->hasRole('user')) {
+            $home = 'user.users.show';
+        }
+        // return view($home)->with('user', $user);
+        return view($home, with(["goal" => $goal, "done" => $done, "user" => $user, "partner" => $partner]));
+
         // $userDis = User::where('id', $id)->get();
         // dd($user);
 
-        return view('user.users.show')->with('user', $user);
+        // return view('user.users.show')->with('user', $user);
     }
 
     /**
@@ -136,15 +158,15 @@ class UserController extends Controller
             'about_me' => 'required',
             'country_id' => 'required',
             'language' => 'required',
-            'image' => 'file'
+            'user_image' => 'file'
         ]);
 
         // Check if a file was uploaded in the image field
-        if ($request->hasfile('image')) {
-            $user_image = request()->file('image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
+        if ($request->hasfile('user_image')) {
+            $user_image = request()->file('user_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
             $extension = $user_image->getClientOriginalExtension();     // Gets file extension
             $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
-            $path = $user_image->storeAs('public/images', $filename);   // Stores the image in the public images under new filename
+            $path = $user_image->storeAs('public/images/users', $filename);   // Stores the image in the public images under new filename
 
             // Update user image with new filename
             $user->update([
@@ -169,8 +191,9 @@ class UserController extends Controller
         // Update interests - removes none selected and adds selected
         $user->interests()->sync($request->interest_id);
 
-        $toast_success = 'User Updated Successfully!';
+        $toast_success = 'Profile Updated Successfully!';
 
-        return view('user.users.profile', $user)->with(compact('toast_success', 'user'));
+        return redirect()->route('home.profile')->with(compact('toast_success', 'user'));
+        // return view('user.users.profile', $user)->with(compact('toast_success', 'user'));
     }
 }

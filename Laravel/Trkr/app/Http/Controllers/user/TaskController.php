@@ -101,8 +101,14 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('user');
+        $userAuth = Auth::user();
+        $userAuth->authorizeRoles('user');
+
+        // Authorise user first
+        if ($task->goal->user->id != Auth::id()) {
+            //403 error forbidden
+            return abort(403);
+        }
 
         $type = ['Reading', 'Writing', 'Listening', 'Speaking'];
 
@@ -119,13 +125,20 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('user');
+        // dd("update");
+        $userAuth = Auth::user();
+        $userAuth->authorizeRoles('user');
+
+         // Authorise user first
+         if ($task->goal->user->id != Auth::id()) {
+            //403 error forbidden
+            return abort(403);
+        }
 
         // dd($request->boolean('status'));
         $user = Auth::user();
 
-        dd($task);
+        // dd($task);
 
         $request->validate([
             'title' => 'required|max:50',
@@ -188,6 +201,7 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
+        // dd("delete");
         $user = Auth::user();
         $user->authorizeRoles('user');
 
