@@ -25,7 +25,10 @@ class RoleUserSeeder extends Seeder
 
         // Loops through each user and assigns the User role
         foreach ($users as $user) {
-            $user->roles()->attach($role_user);
+            // EXCEPT for existing admins, otherwise they'd get both roles
+            if (!$user->isAdministrator()) {
+                $user->roles()->attach($role_user);
+            }
         }
         
     }

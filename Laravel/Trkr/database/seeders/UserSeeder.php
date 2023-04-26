@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
     {
         // Gets the admin and user from the role table
         $role_admin = Role::where('name', 'admin')->first();
-        $role_user = Role::where('name', 'user')->first();
+        // $role_user = Role::where('name', 'user')->first();
 
         //  Creates one new admin 
         $admin = new User();
