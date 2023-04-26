@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\User\UserController;
+use App\Models\Country;
+use App\Models\Interest;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -30,7 +34,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/user/goals/create';
+    // protected $redirectTo = routeTo(home.createProfile);
+    protected $redirectTo = '/user/users/createProfile';
     // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -72,6 +77,7 @@ class RegisterController extends Controller
         $filename = date('Y-m-d-His') . '_' . request()->input('name') . '_' . $extension;  // Creates unique filename
         $path = $user_image->storeAs('public/images/users', $filename);   // Stores the image in the public images under new filename
 
+        // $country_id = (int)$data['country_id'];
 
         // Replace 'return' with user variable
         $user = User::create([
@@ -79,14 +85,28 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'user_image' => $filename
+            // 'level' => $data['level'],
+            // 'about_me' => $data['about_me'],
+            // 'country_id' => $country_id
         ]);
-
-
 
         // Assigns the 'user' role to all users created via the registration form
         $role_user = Role::where('name', 'user')->first();
         $user->roles()->attach($role_user);
 
+        // Assign random partner, that's not the admin
+        $users = User::whereNot('id', 1)->get(); 
+        $randomUser = $users->random();
+        $user->addPartner($randomUser);
+
+        $languages = ['German', 'Spanish', 'French', 'Italian'];
+        $countries = Country::all();
+        $interests = Interest::all();
+
+        // return view('user.users.createProfile')
+        // ->with('data', $user)
+        // return redirect()->route('user.users.edit', $user)->with(compact('languages', 'countries', 'interests'));
+        
         // Returns the User object with it's assigned role
         return $user;
     }

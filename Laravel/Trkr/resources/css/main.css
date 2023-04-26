@@ -58,9 +58,9 @@
     margin-right: 0;
 }
 
-input[type="file"] {
+/* input[type="file"] {
     display: none;
-}
+} */
 
 .custom-file-upload {
     border: 1px solid #ccc;

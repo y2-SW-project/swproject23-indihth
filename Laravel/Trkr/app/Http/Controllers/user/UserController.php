@@ -129,6 +129,10 @@ class UserController extends Controller
         $interests = Interest::all();
         $goal = $user->goals->first();
 
+        if (!$user->country) {
+            return view('user.users.createProfile')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
+        }
+
         return view('user.users.edit')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
     }
 
@@ -141,6 +145,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
         $userAuth = Auth::user();
         $userAuth->authorizeRoles('user');
 
@@ -151,7 +156,7 @@ class UserController extends Controller
         }
 
         // dd($request->interest_id);
-
+        dd("check");
         // TODO: Add validation on 'language' to confirm it's a valid option
         $request->validate([
             'name' => 'required|max:50',
@@ -160,6 +165,7 @@ class UserController extends Controller
             'language' => 'required',
             'user_image' => 'file'
         ]);
+
 
         // Check if a file was uploaded in the image field
         if ($request->hasfile('user_image')) {
@@ -195,5 +201,36 @@ class UserController extends Controller
 
         return redirect()->route('home.profile')->with(compact('toast_success', 'user'));
         // return view('user.users.profile', $user)->with(compact('toast_success', 'user'));
+    }
+
+    public function store(Request $request, User $user)
+    {
+        $userAuth = Auth::user();
+        $userAuth->authorizeRoles('user');
+
+        // Authorise user first
+        if ($user->id != Auth::id()) {
+            //403 error forbidden
+            return abort(403);
+        }
+
+        $request->validate([
+            'about_me' => 'required',
+            'country_id' => 'required',
+            // how to validate interests?
+        ]);
+
+          // Update user
+          $user->update([
+            'about_me' => $request->about_me,
+            'country_id' => (int)$request->country_id
+        ]);
+
+         // Update interests - removes none selected and adds selected
+         $user->interests()->sync($request->interest_id);
+
+         $toast_success = 'Profile Created Successfully!';
+
+         return redirect()->route('user.goals.create')->with(compact('toast_success', 'user'));
     }
 }

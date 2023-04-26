@@ -39,6 +39,9 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard
 Route::get('/goals', [App\Http\Controllers\HomeController::class, 'indexGoals'])->name('home.indexGoals');
 Route::get('/users', [App\Http\Controllers\HomeController::class, 'indexUsers'])->name('home.indexUsers');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('home.profile');
+Route::get('/user/users/createProfile',[HomeController::class,'createProfile'])->name('home.createProfile');
+
+
 
 // Allows only logged in authorised users to access the tvshows page
 Route::resource('/admin/goals', AdminGoalController::class)->middleware(['auth'])->names('admin.goals');
@@ -53,6 +56,7 @@ Route::get('/admin/tasks/{id}/edit', [AdminTaskController::class, 'edit'])->name
 Route::resource('/user/goals', UserGoalController::class)->middleware(['auth'])->names('user.goals');
 Route::resource('/user/tasks', UserTaskController::class)->middleware(['auth'])->names('user.tasks')->except('create, edit');
 Route::resource('/user/users', UserUserController::class)->middleware(['auth'])->names('user.users')->except('destroy');
+Route::put('/user/users/{id}/store',[UserUserController::class,'store'])->name('user.users.store');
 
 // Routes created seperately in order to pass the goal id through to the task create and edit views
 Route::get('/user/tasks/{id}/create', [UserTaskController::class, 'create'])->name('user.tasks.create');

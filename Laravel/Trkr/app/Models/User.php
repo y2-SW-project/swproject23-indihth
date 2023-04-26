@@ -13,6 +13,21 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    
+    // public function getRedirectRoute()
+    // {
+
+    //     if ($this->country_id) {
+    //         return 'dashboard';
+    //     } 
+    //     return 
+    //     // return match((int)$this->country_id) {
+    //     //     NULL => 'student.dashboard',
+    //     //     2 => 'teacher.dashboard',
+    //     //     // ...
+    //     // };
+    // }
+
     // Defining the 1-M relationship between users and goals
     public function goals()
     {

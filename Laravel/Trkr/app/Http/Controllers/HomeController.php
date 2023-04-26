@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\user\GoalController as UserGoalController;
-
+use App\Models\Country;
 use App\Models\Goal;
+use App\Models\Interest;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -130,5 +131,25 @@ class HomeController extends Controller
         }
         // return view($home)->with('user', $user);
         return view($home, with(["goal" => $goal, "done" => $done, "user" => $user, "partner" => $partner]));
+    }
+
+
+    public static function createProfile()
+    {
+        $user = Auth::user();
+        $user->authorizeRoles('user');
+
+        // Authorise user first
+        // if ($user->id != Auth::id()) {
+        //     //403 error forbidden
+        //     return abort(403);
+        // }
+
+        // TODO Create a languages table, easier to manage and update
+        $languages = ['German', 'Spanish', 'French', 'Italian'];
+        $countries = Country::all();
+        $interests = Interest::all();
+
+        return view('user.users.createProfile')->with(compact('user', 'languages', 'countries', 'interests'));
     }
 }

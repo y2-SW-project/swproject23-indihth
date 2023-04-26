@@ -21,8 +21,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_id');     // creating the column for the foreign key
             $table->unsignedBigInteger('partner_id');
-            $table->foreign('user_id')->references('id')->on('users');     // creating the foreign key link to the users id
-            $table->foreign('partner_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');     // creating the foreign key link to the users id
+            $table->foreign('partner_id')->references('id')->on('users')->onDelete('cascade');
             // $table->primary(['user_id', 'partner_id']); needed??
             $table->timestamps();
         });
