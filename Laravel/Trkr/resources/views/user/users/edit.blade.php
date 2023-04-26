@@ -3,9 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            {{-- <a href="{{ URL::previous() }}" class="ms-n6 mb-n6">
-                <i class="bi bi-arrow-left text-dark fs-4"></i>
-            </a> --}}
             <div class="d-flex ms-n5">
                 <a href="{{ URL::previous() }}" class="me-3 pe-n3">
                     <i class="bi bi-arrow-left text-dark fs-4"></i>
@@ -31,9 +28,9 @@
                             {{-- Profile Image Upload, how to display preview? --}}
                             <div class="my-auto ms-3">
                                 {{-- Image Upload Button --}}
-                                <div class="btn btn-primary mt-3">
-                                    Change Image
-                                    <input id="image" type="file" class="imgUpload" name="image" field="image"
+                                <div class="">
+                                     <label for="user_image" class="btn btn-primary">Upload Image</label>
+                                    <input id="user_image" type="file" class="" name="user_image" field="user_image"
                                         required>
                                 </div>
                                 <p class="fs-6 text-muted">Image to be displayed on your profile</p>
@@ -59,31 +56,18 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col">
-                                    {{-- Language --}}
-                                    <label for="language" class="form-label">Language</label>
-                                    <select class="form-select" id="language" name="language" label="Select Language">
-                                        @foreach ($user->goals as $goal)
-                                            @foreach ($languages as $language)
-                                                <option value="{{ $language }}" @selected(old('language', $goal->language) == $language)>
-                                                    {{ $language }}
-                                                </option>
-                                            @endforeach
-                                        @endforeach
-                                    </select>
-                                </div>
                             </div>
                             {{-- Interests --}}
                             <div class="row ps-3">
                                 {{-- <p>{{ $user->interests }}</p> --}}
-                                    @foreach ($interests as $interest)
-                                        <div class="col-6 form-check">
-                                            <input type="checkbox" class="form-check-input" name="interest_id[]"
-                                                id="exampleCheck1" value="{{ $interest->id }}"
-                                                {{ $user->interests->where('id', $interest->id)->isNotEmpty() ? 'checked' : '' }}>
-                                            <span>{{ $interest->name }}</span>
-                                        </div>
-                                    @endforeach
+                                @foreach ($interests as $interest)
+                                    <div class="col-6 form-check">
+                                        <input type="checkbox" class="form-check-input" name="interest_id[]"
+                                            id="exampleCheck1" value="{{ $interest->id }}"
+                                            {{ $user->interests->where('id', $interest->id)->isNotEmpty() ? 'checked' : '' }}>
+                                        <span>{{ $interest->name }}</span>
+                                    </div>
+                                @endforeach
                             </div>
                             {{-- Buttons --}}
                             <div class="col-12 mt-2 d-grid">

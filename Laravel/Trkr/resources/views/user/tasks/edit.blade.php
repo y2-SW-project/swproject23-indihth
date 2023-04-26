@@ -37,20 +37,18 @@
 
                         {{-- Save, Cancel and Delete buttons --}}
                         <div class="col-12 mt-2 d-flex justify-content-between">
-                            
+                            <div>
+                                <x:form::button.link href="{{ url()->previous() }}" class="btn-secondary me-3">
+                                    {{ __('Cancel') }}</x:form::button.link>
+                                <x:form::button.submit>Save </x:form::button.submit>
+                            </div>
+                            </x:form:form>
                             {{-- Task Delete Button --}}
                             <x:form::form action="{{ route('user.tasks.destroy', $task) }}" method="delete" class="mt-auto">
                                 <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete
                                     Task
                                 </x:form::button.submit>
                             </x:form::form>
-                            <div>
-                                <x:form::button.link href="{{  url()->previous()}}"
-                                    class="btn-secondary me-3">
-                                    {{ __('Cancel') }}</x:form::button.link>
-                                <x:form::button.submit>Save </x:form::button.submit>
-                            </div>
-                            </x:form:form>
                         </div>
                 </div>
             </div>

@@ -27,14 +27,6 @@
                             </select>
                         </div>
                         <div class="col-12 mt-2 d-flex justify-content-between">
-                            {{-- Delete Goal Button --}}
-                            <x:form::form action="{{ route('user.goals.destroy', $goal) }}" method="delete">
-                                {{-- @method() and @csrf() not needed as form::form component automatically includes these --}}
-
-                                <x:form::button.submit class="btn btn-danger" onclick="deleteConfirm(event)">Delete Goal
-                                </x:form::button.submit>
-                            </x:form::form>
-
                             {{-- Save and Cancel Buttons --}}
                             <div>
                                 <x:form::button.link href="{{ route('user.goals.show', $goal->id) }}"
@@ -44,6 +36,14 @@
                             </div>
                         </div>
                         </x:form:form>
+
+                        {{-- Delete Goal Button
+                            Should user be able to delete their only goal? breaks other pages--}}
+                            
+                        {{-- <x:form::form action="{{ route('user.goals.destroy', $goal) }}" method="delete">
+                            <x:form::button.submit class="btn btn-danger" onclick="deleteConfirm(event)">Delete Goal
+                            </x:form::button.submit>
+                        </x:form::form> --}}
                 </div>
             </div>
         </div>
