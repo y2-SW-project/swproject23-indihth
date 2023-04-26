@@ -117,6 +117,9 @@ class HomeController extends Controller
 
         $partner = $user->partners->first();
 
+        // Put url into session data to redirect back after editing goal or task
+        Session::put('url', request()->fullUrl());
+
         // Redirects to the admin index if admin
         if ($user->hasRole('admin')) {
             $home = 'admin.users.profile';
@@ -126,7 +129,6 @@ class HomeController extends Controller
             $home = 'user.users.profile';
         }
         // return view($home)->with('user', $user);
-        return view($home, with(["goal" =>$goal, "done"=> $done, "user" => $user, "partner" => $partner]));
-  
+        return view($home, with(["goal" => $goal, "done" => $done, "user" => $user, "partner" => $partner]));
     }
 }
