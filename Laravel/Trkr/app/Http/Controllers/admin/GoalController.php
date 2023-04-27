@@ -92,8 +92,8 @@ class GoalController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
-        $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
+        $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->orderBy('updated_at')->get();
+        $done = Task::where('status', 1)->where('goal_id', $goal->id)->orderBy('updated_at')->get();
 
         // User relationship between goal and user to work backwards
         $user = $goal->user;
@@ -144,7 +144,25 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        return to_route('admin.goals.show', $goal)->with('toast_success', 'Goal Updated Successfully!');
+         // If the user comes from Dashboard, session data will exist for it, so redirect there
+         if (session('url')) {
+            $url = session('url');
+            $request->session()->forget('url');
+            return redirect($url);
+        }
+
+        
+        $toast_success = 'Profile Updated Successfully!';
+
+         // If the user comes from Dashboard, session data will exist for it, so redirect there
+         if (session('url')) {
+            $url = session('url');
+            $request->session()->forget('url');
+
+            return redirect($url)->with(compact('toast_success', 'user'));
+        }
+
+        return to_route('admin.goals.show', $goal)->with(compact('toast_success', 'user'));
     }
 
     /**
@@ -159,6 +177,13 @@ class GoalController extends Controller
         $user->authorizeRoles('admin');
 
         $goal->delete();
+
+        // Checks where user came from using session data and redirect there
+        if (session('url')) {
+            $url = session('url');
+            request()->session()->forget('url');
+            return redirect($url);
+        }
 
         return to_route('admin.goals.index')->with('toast_success', 'Goal Deleted Successfully!');
     }

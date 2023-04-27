@@ -86,25 +86,38 @@ class HomeController extends Controller
 
         // Immediately redirects admin to goal index
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.goals.index');
+            return redirect()->route('admin.users.index');
+        }
+
+        if (!$user->country) {
+            $languages = ['German', 'Spanish', 'French', 'Italian'];
+            $countries = Country::all();
+            $interests = Interest::all();
+            return view('user.users.edit')->with(compact('user', 'languages', 'countries', 'interests'));
+
         }
 
         $goal = Goal::where('user_id', $user->id)->get();
         $partnerGoal = $user->partners->first()->goals->first()->id;
-
-        // Using first() because goal is a M:N to user but only 1 Goal was seeded per user
-        // Should loop through goals on dashboard view to enable displaying multiple goals later on
-        $toDo = Task::where('status', 0)->where('goal_id', $goal->first()->id)->get();
+       
+       
 
         $partnerDone = Task::where('status', 1)
             ->where('goal_id', $partnerGoal)
             ->latest('updated_at')
             ->get();
 
-        // Put url into session data to redirect back after editing task
+        // Put url into session data to redirect back to after editing task
         Session::put('url', request()->fullUrl());
 
-        return view('user.dashboard', with(["goal" => $goal, "toDo" => $toDo, "partnerDone" => $partnerDone, "user" => $user]));
+         // Using first() because goal is a M:N to user but only 1 Goal was seeded per user
+        // Should loop through goals on dashboard view to enable displaying multiple goals later on
+        if ($goal->first()) {
+            $toDo = Task::where('status', 0)->where('goal_id', $goal->first()->id)->get();
+            return view('user.dashboard', with(["goal" => $goal, "toDo" => $toDo, "partnerDone" => $partnerDone, "user" => $user]));
+        } 
+
+        return view('user.dashboard', with(["goal" => $goal, "partnerDone" => $partnerDone, "user" => $user]));
     }
 
     public function profile()

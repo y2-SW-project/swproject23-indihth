@@ -12,6 +12,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -34,9 +35,9 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = routeTo(home.createProfile);
-    protected $redirectTo = '/user/users/createProfile';
-    // protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = route('user.users.edit', $user);
+    // protected $redirectTo = '/user/users/edit';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -107,6 +108,9 @@ class RegisterController extends Controller
         // ->with('data', $user)
         // return redirect()->route('user.users.edit', $user)->with(compact('languages', 'countries', 'interests'));
         
+         // Put url into session data to redirect back to after editing task
+         Session::put('finishProfile', request()->fullUrl());
+
         // Returns the User object with it's assigned role
         return $user;
     }
