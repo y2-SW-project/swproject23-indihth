@@ -142,14 +142,16 @@ class TaskController extends Controller
 
         $request->validate([
             'title' => 'required|max:50',
-            'description' => 'required'
+            'description' => 'required',
+            // 'activity' => 'required'
         ]);
 
         $task->update([
-            'goal_id' => $task->goal_id,    // Goal ID is the same as before edit
+            // 'goal_id' => $task->goal_id,    // Goal ID is the same as before edit
             'status' => $request->boolean('status'),
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            // 'type' => $request->activity //Need to change task type to own table of options
         ]);
 
         // If the user comes from Dashboard, session data will exist for it, so redirect there

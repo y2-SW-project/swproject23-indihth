@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="ps-3 mb-4">
-                <h1 class="h5 mb-0 fw-bolder">Partners</h1>
+                <h1 class="h5 mb-0 fw-bolder">Users</h1>
                 {{-- Display current date --}}
                 <p class="h7">{{ now()->toFormattedDayDateString() }}</p>
             </div>

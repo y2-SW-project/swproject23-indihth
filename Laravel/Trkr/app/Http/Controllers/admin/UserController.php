@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\Interest;
 use App\Models\Role;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -26,7 +28,7 @@ class UserController extends Controller
         // $users = User::whereNot('name', 'Glenn Sturgis')
         $users = User::latest('updated_at')
             ->whereNot('id', 1)     // Don't include admin user, always id of 1
-            ->paginate(9);
+            ->paginate(6);
 
         // $users = $users->users;
         // dd($users);
@@ -52,7 +54,24 @@ class UserController extends Controller
         // $userDis = User::where('id', $id)->get();
         // dd($user);
 
-        return view('admin.users.show')->with('user', $user);
+        // return view('admin.users.show')->with('user', $user);
+
+        $home = 'home';
+
+        $goal = $user->goals->first();
+       
+
+        $partner = $user->partners->first();
+
+        // Put url into session data to redirect back after editing goal or task
+        Session::put('url', request()->fullUrl());
+
+        if ($goal) {
+            $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
+            return view('admin.users.show')->with(compact('goal', 'done', 'user', 'partner'));
+        } 
+
+        return view('admin.users.show')->with(compact('goal', 'user', 'partner'));
     }
 
     /**
@@ -67,11 +86,13 @@ class UserController extends Controller
         $userAuth = Auth::user();
         $userAuth->authorizeRoles('admin');
         // TODO Create a languages table, easier to manage and update
+
         $languages = ['German', 'Spanish', 'French', 'Italian'];
         $countries = Country::all();
         $interests = Interest::all();
+        $goal = $user->goals->first();
 
-        return view('admin.users.edit')->with(compact('user', 'languages', 'countries', 'interests'));
+        return view('admin.users.edit')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
     }
 
     /**
@@ -93,24 +114,22 @@ class UserController extends Controller
             'name' => 'required|max:50',
             'about_me' => 'required',
             'country_id' => 'required',
-            'language' => 'required',
-            'image' => 'file'
+            'user_image' => 'file'
         ]);
 
+
         // Check if a file was uploaded in the image field
-        if ($request->hasfile('image')) {
-            $user_image = request()->file('image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
+        if ($request->hasfile('user_image')) {
+            $user_image = request()->file('user_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
             $extension = $user_image->getClientOriginalExtension();     // Gets file extension
             $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
-            $path = $user_image->storeAs('public/images', $filename);   // Stores the image in the public images under new filename
+            $path = $user_image->storeAs('public/images/users', $filename);   // Stores the image in the public images under new filename
 
             // Update user image with new filename
             $user->update([
                 'user_image' => $filename
             ]);
         }
-
-      
 
         // Update user
         $user->update([
@@ -119,15 +138,14 @@ class UserController extends Controller
             'country_id' => (int)$request->country_id
         ]);
 
-        // Update language in the Goal table
-        foreach ($user->goals as $goal) {
-            $goal->update([
-                'language' => $request->language
-            ]);
-        }
+        // Update interests - removes none selected and adds selected
+        $user->interests()->sync($request->interest_id);
 
+        $toast_success = 'Profile Updated Successfully!';
 
-        return to_route('admin.users.show', $user->id)->with('toast_success', 'User Updated Successfully!');
+        return to_route('admin.users.show', $user->id)->with(compact('toast_success', 'user'));
+
+        // return to_route('admin.users.show', $user->id)->with('toast_success', 'User Updated Successfully!');
     }
 
     /**

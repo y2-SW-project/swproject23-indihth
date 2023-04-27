@@ -28,10 +28,10 @@ class GoalController extends Controller
         $user->authorizeRoles('user'); // Checking if the user is an admin
 
         // Authorise user first
-        if ($goal->user->id != Auth::id()) {
-            //403 error forbidden
-            return abort(403);
-        }
+        // if ($goal->user->id != Auth::id()) {
+        //     //403 error forbidden
+        //     return abort(403);
+        // }
 
         // Fetch goals in order of when they were created and limited to 5 per page
         $goals = Goal::where('user_id', Auth::id())
@@ -81,6 +81,8 @@ class GoalController extends Controller
      */
     public function store(Request $request, User $user)
     {
+        // dd("check");
+
         $user = User::where('id', (int)$request->user)->get();
         // dd($user);
 
@@ -89,23 +91,38 @@ class GoalController extends Controller
 
         // dd($request);
 
+        $goal_image = request()->file('goal_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
+        $extension = $goal_image->getClientOriginalExtension();     // Gets file extension
+        $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
+        $path = $goal_image->storeAs('public/images/goals', $filename);   // Stores the image in the public images under new filename
+
+
         $request->validate([
             'title' => 'required|max:50',
             'description' => 'required',
             // Issue with validating select option, 
-            'about_me' => 'required',
-            'country_id' => 'required',
             'language' => 'required',
+            'goal_image' => 'file'
         ]);
 
-        Goal::create([
+        $goal = Goal::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
-            'language' => $request->language
+            'language' => $request->language,
+            'goal_image' => $filename
         ]);
 
-        return to_route('home.dashboard')->with('toast_success', 'Goal Created Successfully!');
+        $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->orderBy('updated_at', 'desc')->get();
+        $done = Task::where('status', 1)->where('goal_id', $goal->id)->orderBy('updated_at', 'desc')->get();
+        // $user = Auth::user();   // Not needed. test removing
+
+        // Put url into session data to redirect back after editing task
+        Session::put('goalStore', request()->fullUrl());
+
+        return view('user.goals.show', with(["goal" => $goal, "toDo" => $toDo, "done" => $done, "user" => $user]));
+
+        // return to_route('home.dashboard')->with('toast_success', 'Goal Created Successfully!');
     }
 
     /**
@@ -125,9 +142,9 @@ class GoalController extends Controller
             return abort(403);
         }
 
-        $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->get();
-        $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
-        $user = Auth::user();   // Not needed. test removing
+        $toDo = Task::where('status', 0)->where('goal_id', $goal->id)->orderBy('updated_at', 'desc')->get();
+        $done = Task::where('status', 1)->where('goal_id', $goal->id)->orderBy('updated_at', 'desc')->get();
+        // $user = Auth::user();   // Not needed. test removing
 
         // Put url into session data to redirect back after editing task
         Session::put('url', request()->fullUrl());
@@ -150,6 +167,7 @@ class GoalController extends Controller
         // Authorise user first
         if ($goal->user->id != Auth::id()) {
             //403 error forbidden
+            dd("check");
             return abort(403);
         }
 
@@ -178,6 +196,8 @@ class GoalController extends Controller
             return abort(403);
         }
 
+
+
         // TODO: Add validation on 'language' to confirm it's a valid option
         $request->validate([
             'title' => 'required|max:50',
@@ -191,7 +211,7 @@ class GoalController extends Controller
             'language' => $request->language
         ]);
 
-        // If the user comes from Dashboard, session data will exist for it, so redirect there
+        // Checks where user came from using session data and redirect there
         if (session('url')) {
             $url = session('url');
             $request->session()->forget('url');
@@ -220,6 +240,7 @@ class GoalController extends Controller
         }
 
         $goal->delete();
+
 
         return to_route('user.goals.index');
     }

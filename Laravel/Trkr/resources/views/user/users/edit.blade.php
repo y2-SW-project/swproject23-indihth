@@ -29,9 +29,9 @@
                             <div class="my-auto ms-3">
                                 {{-- Image Upload Button --}}
                                 <div class="">
-                                     <label for="user_image" class="btn btn-primary">Upload Image</label>
-                                    <input id="user_image" type="file" class="" name="user_image" field="user_image"
-                                        required>
+                                    <label for="user_image" class="btn btn-primary">Upload Image</label>
+                                    <input id="user_image" type="file" class="" name="user_image"
+                                        field="user_image" required hidden>
                                 </div>
                                 <p class="fs-6 text-muted">Image to be displayed on your profile</p>
                             </div>
@@ -39,8 +39,6 @@
                         <hr />
                         {{-- Personal Details --}}
                         <div class="col">
-                            {{-- Name --}}
-                            <x:form::input name="name" label="Name" :value="@old('name', $user->name)" class="mb-4" />
                             {{-- About Me --}}
                             <x:form::textarea name="about_me" label="About Me" :value="@old('about_me', $user->about_me)" rows="4"
                                 class="mb-4" />
@@ -49,11 +47,19 @@
                                 <div class="col me-3">
                                     <label for="country_id" class="form-label">Country</label>
                                     <select class="form-select" id="country_id" name="country_id" label="Select Country">
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}" @selected(old('country_id', $user->country->id) == $country->id)>
-                                                {{ $country->name }}
-                                            </option>
-                                        @endforeach
+                                        @if (isset($country))
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}" @selected(old('country_id', $user->country->id) == $country->id)>
+                                                    {{ $country->name }}
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}">
+                                                    {{ $country->name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -77,19 +83,16 @@
                         </x:form:form>
                 </div>
             </div>
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <div class="col-11 card card-body">
                     <h2 class="h5">Goal Info</h2>
-                    {{-- You won't need to define a @method() directive, declare your PUT, PATCH or DELETE action directly in the action attribute --}}
-                    <x:form::form :bind="$goal" class="row" method="put"
+                   <x:form::form :bind="$goal" class="row" method="put"
                         :action="route('user.goals.update', $goal)">
                         <div class="col mt-3">
                             <x:form::input name="title" label="Title" :value="@old('title', $goal->title)" class="" />
-                            {{-- <x:form::input type="email" name="email" /> --}}
                             <x:form::textarea name="description" label="Description" rows=5 :value="@old('description', $goal->description)" />
                         </div>
                         <div class="col-md-10">
-                            {{-- 'multiple' displays options as non-dropdown list --}}
                             <label for="languages" class="form-label">Language</label>
                             <select class="form-select" id="languages" name="language" label="Select Language">
                                 @foreach ($languages as $language)
@@ -100,25 +103,13 @@
                             </select>
                             <br />
                         </div>
-                        {{-- Buttons --}}
+                        
                         <div class="col-12 mt-2 d-grid">
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>
-                        </x:form:form>
-                        {{-- Interests NEED TO FIX --}}
-                        {{-- <label for="interests" class="col col-form-label text-md-end">{{ __('Interests') }}</label>
-                    
-                                @foreach ($interests as $interest)
-                                    <div class="form-check">
-                                        <input type="hidden" name="interest[]" >
-                                        <input class="form-check-input" type="checkbox" value="{{ $interest->id }}" name="interest[]" id="flexCheckDefault" @checked($user->interest || old('interest', 0) === 1)>
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            {{ $interest->name }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                                <br/> --}}
+                    </x:form:form>
                 </div>
-            </div>
+            </div> --}}
         </div>
-    @endsection
+    </div>
+@endsection

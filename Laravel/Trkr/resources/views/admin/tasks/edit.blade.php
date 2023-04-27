@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-md-6">
                             {{-- 'multiple' displays options as non-dropdown list --}}
-                            <label for="languages" class="form-label">Language</label>
+                            <label for="languages" class="form-label">Activity</label>
                             <select class="form-select" id="languages" name="language" label="Select Language">
                                 @foreach ($type as $activity)
                                     <option value="{{ $activity }}" @selected(old('activity', $task->activity) == $activity)>
@@ -45,6 +45,12 @@
                             <x:form::button.submit>Save </x:form::button.submit>
                         </div>
                         </x:form:form>
+                         {{-- Task Delete Button --}}
+                         <x:form::form action="{{ route('admin.tasks.destroy', $task) }}" method="delete" class="mt-auto">
+                            <x:form::button.submit class="btn-danger" onclick="deleteConfirm(event)">Delete
+                                Task
+                            </x:form::button.submit>
+                        </x:form::form>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -28,7 +29,7 @@ class UserController extends Controller
         $users = User::latest('updated_at')
             ->whereNot('id', 1)     // Don't include admin user, always id of 1
             ->whereNot('id', $user->id)     // Don't include admin user, always id of 1
-            ->paginate(9);
+            ->paginate(6);
 
         // $users = $users->users;
         // dd($users);
@@ -79,6 +80,8 @@ class UserController extends Controller
         $userAuth = Auth::user();
         $userAuth->authorizeRoles('user');
 
+        // dd($user->country->image);
+
         // verify they are logged in
         // $user = Auth::user();
         $home = 'home';
@@ -87,6 +90,7 @@ class UserController extends Controller
         $done = Task::where('status', 1)->where('goal_id', $goal->id)->get();
 
         $partner = $user->partners->first();
+
 
         // Redirects to the admin index if admin
         if ($user->hasRole('admin')) {
@@ -130,7 +134,10 @@ class UserController extends Controller
         $goal = $user->goals->first();
 
         if (!$user->country) {
-            return view('user.users.createProfile')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
+            // Put url into session data so 'Update' can check which form user is coming from
+            Session::put('finishProfile', request()->fullUrl());
+
+            return view('user.users.edit')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
         }
 
         return view('user.users.edit')->with(compact('user', 'languages', 'countries', 'interests', 'goal'));
@@ -156,50 +163,73 @@ class UserController extends Controller
         }
 
         // dd($request->interest_id);
-        dd("check");
-        // TODO: Add validation on 'language' to confirm it's a valid option
-        $request->validate([
-            'name' => 'required|max:50',
-            'about_me' => 'required',
-            'country_id' => 'required',
-            'language' => 'required',
-            'user_image' => 'file'
-        ]);
+        
+        if (session('finishProfile')) {
+            // dd("finishProfile has url");
 
-
-        // Check if a file was uploaded in the image field
-        if ($request->hasfile('user_image')) {
-            $user_image = request()->file('user_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
-            $extension = $user_image->getClientOriginalExtension();     // Gets file extension
-            $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
-            $path = $user_image->storeAs('public/images/users', $filename);   // Stores the image in the public images under new filename
-
-            // Update user image with new filename
+            $request->validate([
+                'about_me' => 'required',
+                // 'country_id' => 'required', //validate select?
+                // how to validate interests?
+            ]);
+            
+            // dd("check");
+            // Update user
             $user->update([
-                'user_image' => $filename
+                'about_me' => $request->about_me,
+                'country_id' => (int)$request->country_id
             ]);
-        }
 
-        // Update user
-        $user->update([
-            'name' => $request->name,
-            'about_me' => $request->about_me,
-            'country_id' => (int)$request->country_id
-        ]);
+            // Update interests - removes none selected and adds selected
+            $user->interests()->sync($request->interest_id);
 
-        // Update language in the Goal table
-        foreach ($user->goals as $goal) {
-            $goal->update([
-                'language' => $request->language
+            $toast_success = 'Profile Created Successfully!';
+
+            // Delete url from session data
+            $url = session('finishProfile');
+            $request->session()->forget('finishProfile');
+            // return redirect($url);
+
+            return redirect()->route('user.goals.create')->with(compact('toast_success', 'user'));
+
+        } 
+
+        
+            // TODO: Add validation on 'language' to confirm it's a valid option
+            $request->validate([
+                'about_me' => 'required',
+                'country_id' => 'required',
+                'user_image' => 'file'
             ]);
-        }
+            // dd("no url");
+            // dd("check");
 
-        // Update interests - removes none selected and adds selected
-        $user->interests()->sync($request->interest_id);
+            // Check if a file was uploaded in the image field
+            if ($request->hasfile('user_image')) {
+                $user_image = request()->file('user_image');    // Using request() instead of passing $request into function from form. request() is a helper function that can be called from anywhere
+                $extension = $user_image->getClientOriginalExtension();     // Gets file extension
+                $filename = date('Y-m-d-His') . '_' . request()->input('name') . '.' . $extension;  // Creates unique filename
+                $path = $user_image->storeAs('public/images/users', $filename);   // Stores the image in the public images under new filename
 
-        $toast_success = 'Profile Updated Successfully!';
+                // Update user image with new filename
+                $user->update([
+                    'user_image' => $filename
+                ]);
+            }
 
-        return redirect()->route('home.profile')->with(compact('toast_success', 'user'));
+            // Update user
+            $user->update([
+                'about_me' => $request->about_me,
+                'country_id' => (int)$request->country_id
+            ]);
+
+            // Update interests - removes none selected and adds selected
+            $user->interests()->sync($request->interest_id);
+
+            $toast_success = 'Profile Updated Successfully!';
+
+            return redirect()->route('home.profile')->with(compact('toast_success', 'user'));
+        
         // return view('user.users.profile', $user)->with(compact('toast_success', 'user'));
     }
 
@@ -220,17 +250,17 @@ class UserController extends Controller
             // how to validate interests?
         ]);
 
-          // Update user
-          $user->update([
+        // Update user
+        $user->update([
             'about_me' => $request->about_me,
             'country_id' => (int)$request->country_id
         ]);
 
-         // Update interests - removes none selected and adds selected
-         $user->interests()->sync($request->interest_id);
+        // Update interests - removes none selected and adds selected
+        $user->interests()->sync($request->interest_id);
 
-         $toast_success = 'Profile Created Successfully!';
+        $toast_success = 'Profile Created Successfully!';
 
-         return redirect()->route('user.goals.create')->with(compact('toast_success', 'user'));
+        return redirect()->route('user.goals.create')->with(compact('toast_success', 'user'));
     }
 }

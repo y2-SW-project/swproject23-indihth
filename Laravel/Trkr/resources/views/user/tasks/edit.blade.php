@@ -15,8 +15,8 @@
                         </div>
                         <div class="col-md-6">
                             {{-- 'multiple' displays options as non-dropdown list --}}
-                            <label for="languages" class="form-label">Language</label>
-                            <select class="form-select" id="languages" name="language" label="Select Language">
+                            <label for="activity" class="form-label">Activity</label>
+                            <select class="form-select" id="activity" name="activity" label="Select Activity">
                                 @foreach ($type as $activity)
                                     <option value="{{ $activity }}" @selected(old('activity', $task->activity) == $activity)>
                                         {{ $activity }}

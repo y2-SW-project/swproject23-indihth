@@ -8,10 +8,11 @@
                 <div class="card">
                     <img src="{{ asset('storage/images/goals/' . $goal->goal_image) }}" class="card-img goalImage">
                     <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center">
-                        <div class="text-white p-3">
-                            <h1 class="display-4 fw-bold text-uppercase">
+                        <div class="text-white text-center p-3">
+                            <h1 class="display-4 fw-bold text-uppercase mb-0">
                                 {{ $goal->title }}
                             </h1>
+                            <p class="h3">{{ $goal->language }}</p>
                         </div>
                     </div>
                 </div>
@@ -119,8 +120,7 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
+        {{-- Include for SweetAlert js package --}}
+        @include('sweetalert::alert')
 @endsection

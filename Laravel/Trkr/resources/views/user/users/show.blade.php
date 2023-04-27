@@ -44,42 +44,53 @@
                 </div>
                 {{-- Partner Information --}}
                 <div class="col">
-                    <div class="card my-3 px-3">
+                    <div class="card">
                         <div class="card-body">
+                            @if (isset($partner))
                             <h3 class="h4">Partner</h3>
-                            <div class="position-relative mb-3">
-                                <div class="d-flex flex-column align-items-center">
-                                    {{-- User Image --}}
-                                    <img src="{{ asset('storage/images/users/' . $partner->user_image) }}" width="130"
-                                        class="rounded-circle shadow-4 mb-3" alt="user profile image">
-                                    <h3 class="h2">
-                                        {{ $partner->name }}
-                                    </h3>
-                                    {{-- Must loop through goals as the relationship is 1:M, even though only 1 goal per user exists --}}
-                                    @foreach ($partner->goals as $goal)
-                                        <p class="fs-6">{{ $goal->language }} | {{ $partner->level }}</p>
-                                    @endforeach
-                                    {{-- partner interests --}}
-                                    <div class="d-flex interests">
-                                        @foreach ($partner->interests as $interest)
-                                            <p class="fs-6 bg-light rounded-pill px-3 py-1">
-                                                {{ $interest->name }}</p>
+                            <div class="d-flex">
+                                {{-- Image, language, interests --}}
+                                <div class="col-6">
+                                    <div class="d-flex flex-column align-items-center mt-3">
+                                        {{-- User Image --}}
+                                        <img src="{{ asset('storage/images/users/' . $partner->user_image) }}"
+                                            width="100" class="rounded-circle shadow-4 mb-3" alt="user profile image">
+                                        <h3 class="h4">
+                                            {{ $partner->name }}
+                                        </h3>
+                                        {{-- Must loop through goals as the relationship is 1:M, even though only 1 goal per user exists --}}
+                                        @foreach ($partner->goals as $goal)
+                                            <p class="fs-6">{{ $goal->language }} | {{ $partner->level }}</p>
                                         @endforeach
+                                        {{-- partner interests --}}
+                                        <div class="d-flex interests">
+                                            {{-- Only display 2 interest, avoid css needed to display all in cols --}}
+                                            @foreach ($partner->interests->take(2) as $interest)
+                                                <p class="fs-6 bg-light rounded-pill px-3 py-1 mb-0">
+                                                    {{ $interest->name }}</p>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                                {{-- Flag --}}
-                                <div class="position-absolute top-0 end-0">
-                                    <img class="rounded rounded-4" width="40"
-                                        src="{{ asset('storage/images/flags/' . $partner->country->image) }}"
-                                        alt="user partner's profile image">
+                                {{-- Partner About Me --}}
+                                <div class="col-6 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h3 class="h5">About Me</h3>
+                                        <p>{{ $partner->about_me }}</p>
+                                    </div>
+
+                                    {{-- View Profile Button --}}
+                                    <a href="{{ route('user.users.show', $partner->id) }}"  class="btn btn-primary">
+                                        View Profile
+                                    </a>
                                 </div>
                             </div>
-                            <div class="mt-3">
-                                <h3 class="h4">About Me</h3>
-                                <p>{{ $partner->about_me }}</p>
-                            </div>
+                            @else
+                            <h3 class="h4">No Partner</h3>
+                            @endif
                         </div>
                     </div>
+
                 </div>
             </div>
             {{-- Display Goal Information - RIGHT COL --}}

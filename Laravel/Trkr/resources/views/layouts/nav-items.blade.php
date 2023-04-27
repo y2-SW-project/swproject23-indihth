@@ -22,12 +22,12 @@
             </li>
             <li class="nav-item {{ Request::is('home.indexGoals') ? 'active' : '' }}">
                 <a href="{{ route('home.indexGoals') }}" class="nav-link  px-0 align-middle" aria-current="page">
-                    <i class="bi bi-bullseye"></i> <span class="ms-2 d-none d-lg-inline">{{ __('Goal') }}</span>
+                    <i class="bi bi-bullseye"></i> <span class="ms-2 d-none d-lg-inline">{{ __('My Goal') }}</span>
                 </a>
             </li>
             <li class="nav-item {{ Request::is('home.indexUsers') ? 'active' : '' }}">
                 <a href="{{ route('home.indexUsers') }}" class="nav-link  px-0 align-middle" aria-current="page">
-                    <i class="bi bi-people-fill"></i> <span class="ms-2 d-none d-lg-inline">{{ __('Partners') }}</span>
+                    <i class="bi bi-people-fill"></i> <span class="ms-2 d-none d-lg-inline">{{ __('Users') }}</span>
                 </a>
             </li>
 

@@ -77,7 +77,7 @@
                                 alt="user profile image">
                         </div>
                         <p class="h4 mb-0"> {{ Str::upper($user->name) }} </p>
-                        @foreach ($user->goals as $goal)
+                        @foreach ($user->goals->take(1) as $goal)
                             <p class="">{{ $goal->language }} | {{ $user->level }}</p>
                         @endforeach
                     </div>
